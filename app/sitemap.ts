@@ -9,7 +9,7 @@ export const dynamic = "force-static";
  * moves `lastmod` on every deploy even for pages that were untouched, which
  * search engines discount as noise.
  */
-const CONTENT_UPDATED = new Date("2026-09-19");
+const CONTENT_UPDATED = new Date("2026-09-20");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = CONTENT_UPDATED;

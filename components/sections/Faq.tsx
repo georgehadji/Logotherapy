@@ -18,9 +18,16 @@ export default function Faq() {
   };
 
   return (
-    <section id="erotiseis" className="shell py-16 md:py-24">
+    /*
+     * The second tinted band, and the page's last beat before the phone
+     * number. Between the steps band and the contact block the homepage ran
+     * five sections and better than 3,700px on one ground, which goes flat
+     * however much the structure underneath it varies. This is also the role
+     * the blush token was always documented as carrying.
+     */
+    <section id="erotiseis" className="bg-blush py-16 md:py-24">
       <JsonLd data={schema} />
-      <div className="grid gap-10 md:grid-cols-12 md:gap-12">
+      <div className="shell grid gap-10 md:grid-cols-12 md:gap-12">
         <div className="md:col-span-4 md:col-start-9">
           <h2 className="display text-[clamp(1.75rem,2.5vw+0.5rem,2.75rem)]">Πριν καλέσετε</h2>
           <p className="mt-5 leading-relaxed text-ink-2">

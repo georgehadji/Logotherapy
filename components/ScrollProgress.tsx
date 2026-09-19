@@ -26,11 +26,19 @@ export default function ScrollProgress() {
       frame = requestAnimationFrame(() => {
         const p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
         arc.current?.style.setProperty("stroke-dashoffset", `${C * (1 - p)}`);
-        btn.current?.style.setProperty("opacity", window.scrollY > 600 ? "1" : "0");
-        btn.current?.style.setProperty(
-          "pointer-events",
-          window.scrollY > 600 ? "auto" : "none"
-        );
+
+        /*
+         * `inert` as well as opacity. `pointer-events: none` stops the mouse
+         * and nothing else: a faded-out button keeps its place in the tab
+         * order, so the first Tab on any page landed on a control nobody
+         * could see, announced as "back to top", with the focus ring drawn on
+         * empty paper. Invisible has to mean unreachable.
+         */
+        const past = window.scrollY > 600;
+        const el = btn.current;
+        if (!el) return;
+        el.style.setProperty("opacity", past ? "1" : "0");
+        el.toggleAttribute("inert", !past);
       });
     };
     onScroll();
@@ -54,7 +62,8 @@ export default function ScrollProgress() {
       ref={btn}
       onClick={toTop}
       aria-label="Επιστροφή στην κορυφή"
-      style={{ opacity: 0, pointerEvents: "none" }}
+      inert
+      style={{ opacity: 0 }}
       // One hover signal, one pixel: a lift, not a zoom.
       className="press fixed bottom-24 right-6 z-[var(--z-sticky)] grid size-12 cursor-pointer place-items-center rounded-full bg-paper-2/80 backdrop-blur transition-[opacity,transform] t-quick hover:-translate-y-0.5 md:bottom-10 md:right-10"
     >

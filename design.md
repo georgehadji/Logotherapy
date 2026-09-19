@@ -30,6 +30,11 @@ character.
   trust section runs flush left with the award cards below, not beside. The
   rooms strip is what keeps the services grid and the therapist from being a
   run of three identically split sections through the middle of the page.
+- Two blush bands carry the page's rhythm and they are placed, not sprinkled:
+  the steps near the top and the questions at the bottom, with the substance
+  on paper between them and the contact block closing on paper-2. One band
+  alone left better than 3,700px on a single ground through the middle, which
+  reads flat however much the structure varies underneath it.
 - Content pages (`/logotherapeftria`, `/to-kentro`, `/ypiresies/[slug]`,
   `/arthra/[slug]`, `/epikoinonia`, legal): **Long Document** — one reading
   column at 65ch, an opener set like the head of a memo, section heads as
@@ -58,7 +63,7 @@ paper **light** · display **book serif** · accent **warm**.
 |---|---|---|---|---|---|
 | `--color-paper` | #faf6f2 | 97.6% 0.007 75 | the page | — | — |
 | `--color-paper-2` | #fefcf9 | 99.2% 0.004 75 | cards, contact band | — | — |
-| `--color-blush` | #fdeae2 | 95.0% 0.024 45 | steps band, notes | — | — |
+| `--color-blush` | #fdeae2 | 95.0% 0.024 45 | steps band, FAQ band, notes | — | — |
 | `--color-line` | #e0d9d2 | 89.0% 0.012 70 | hairlines, card borders | 1.30 | — |
 | `--color-ink` | #291f19 | 25.0% 0.018 55 | headings, display | **15.0** | 13.8 |
 | `--color-ink-2` | #4b4038 | 38.0% 0.020 55 | body copy | **9.4** | 8.6 |
@@ -152,9 +157,13 @@ container `.shell`: max 80rem, `padding-inline: clamp(1rem, 5vw, 4rem)`.
 - Mobile: the fixed call bar (filled accent) is the only other filled surface.
 
 ## Navigation and footer
-- Nav: **N5 floating pill** — sticky, detached, max 52rem, blur backdrop,
+- Nav: **N5 floating pill** — sticky, detached, max 60rem, blur backdrop,
   wordmark with the mark left, link cluster centre, phone pill right. Below
-  `lg` the links fold into a full-screen panel.
+  `lg` the links fold into a full-screen panel. 60rem is a measured floor, not
+  a preference: wordmark + six Greek labels + phone pill come to 886px, and
+  all three are `whitespace-nowrap`, so a narrower cap does not compress them
+  — it puts the phone pill outside the bar's own border. Any new nav label
+  has to be measured against this.
 - The mark has two sizes and they are different crops of one file. The hero
   plate carries the whole logo. The wordmark and the footer carry the three
   petals alone (`logo-petals.png`, keyed off the logo's white field): the

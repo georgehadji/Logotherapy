@@ -42,7 +42,10 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
   if (!s) notFound();
 
   const idx = services.findIndex((x) => x.slug === slug);
-  const next = services[(idx + 1) % services.length];
+  /* No wrap. The services are numbered 01–08, so "next" after the eighth was
+     the first one — a loop the reader has already walked. At the end of the
+     set the index is the honest destination. */
+  const next = services[idx + 1];
   const relatedArticles = articles.filter((a) => a.related.includes(s.slug));
   const crumbs: Crumb[] = [
     { label: "Υπηρεσίες", href: "/ypiresies" },
@@ -131,10 +134,21 @@ export default async function ServicePage({ params }: { params: Promise<Params> 
             )}
 
             <p className={`${relatedArticles.length > 0 ? "mt-4" : "mt-10 border-t border-line pt-6"} text-base`}>
-              Επόμενη υπηρεσία:{" "}
-              <Link href={`/ypiresies/${next.slug}`} className={inlineLink}>
-                {next.title} →
-              </Link>
+              {next ? (
+                <>
+                  Επόμενη υπηρεσία:{" "}
+                  <Link href={`/ypiresies/${next.slug}`} className={inlineLink}>
+                    {next.title} →
+                  </Link>
+                </>
+              ) : (
+                <>
+                  Τελευταία από τις {services.length}:{" "}
+                  <Link href="/ypiresies" className={inlineLink}>
+                    όλες οι υπηρεσίες →
+                  </Link>
+                </>
+              )}
             </p>
           </div>
         </article>

@@ -6,7 +6,7 @@
  * nav: N5 floating pill · footer: Ft5 statement
  * H2 knobs: ratio=7/5, right=identity plate, foot=hairline signs band
  * F4 knobs: numbering=1/2/3, layout=vertical rail, connector=line, head=stacked
- * N5 knobs: width=max 52rem, backdrop=blur+saturate, anchor=top-centred · Ft5 knobs: width=38ch, wordmark=under sentence, rule=hairline
+ * N5 knobs: width=max 60rem, backdrop=blur+saturate, anchor=top-centred · Ft5 knobs: width=38ch, wordmark=under sentence, rule=hairline
  * contrast: pass (40–41, measured) · slop: pass (42–45) · honest: pass (46) · chrome: pass (47)
  * tokens: pass (48) · icons: pass (30) · mobile: pass (34, 49, 50–57)
  */
@@ -28,7 +28,8 @@
    */
   --color-paper: #faf6f2;
   --color-paper-2: #fefcf9;
-  /* Tinted band: the accent at ~8 % over paper. Steps, FAQ, note boxes. */
+  /* Tinted band: the accent at ~8 % over paper. The two bands that carry the
+     homepage's rhythm — the steps and the questions — plus the note boxes. */
   --color-blush: #fdeae2;
   /* 15.0:1 on paper */
   --color-ink: #291f19;

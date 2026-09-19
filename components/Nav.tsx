@@ -50,7 +50,14 @@ export default function Nav() {
     <>
       {/* Sticky, not fixed: it occupies its own row at the top so nothing hides under it. */}
       <header className="sticky top-0 z-[var(--z-nav)] px-3 pt-3 [view-transition-name:nav] md:px-4 md:pt-4">
-        <div className="mx-auto flex w-full max-w-[52rem] items-center justify-between gap-3 rounded-full border border-line bg-paper-2/85 py-1.5 pl-4 pr-1.5 shadow-[var(--shadow-pill)] backdrop-blur-md backdrop-saturate-150">
+        {/*
+         * 60rem, not 52: the wordmark, six Greek labels and the phone pill
+         * measure 886px, and three nowrap flex children cannot shrink below
+         * their content, so a 52rem cap did not compress them — it let the
+         * phone pill hang 70px outside the bar's own rounded border, on every
+         * page. The bar has to be able to hold what it carries.
+         */}
+        <div className="mx-auto flex w-full max-w-[60rem] items-center justify-between gap-3 rounded-full border border-line bg-paper-2/85 py-1.5 pl-4 pr-1.5 shadow-[var(--shadow-pill)] backdrop-blur-md backdrop-saturate-150">
           <Link
             href="/"
             className="flex min-h-11 items-center gap-2 whitespace-nowrap font-semibold tracking-[-0.01em] text-ink"
@@ -69,7 +76,7 @@ export default function Nav() {
                     <Link
                       href={item.href}
                       aria-current={active ? "page" : undefined}
-                      className={`inline-flex min-h-10 items-center whitespace-nowrap rounded-full px-3 text-sm font-medium transition-colors t-quick ${
+                      className={`inline-flex min-h-10 items-center whitespace-nowrap rounded-full px-2.5 text-sm font-medium transition-colors t-quick ${
                         active ? "bg-blush text-accent" : "text-ink-2 hover:bg-paper hover:text-ink"
                       }`}
                     >
@@ -84,7 +91,11 @@ export default function Nav() {
           <div className="flex items-center gap-1.5">
             <a
               href={`tel:${therapist.phone}`}
-              className="pill min-h-10 px-4 text-sm max-sm:px-3"
+              // 44px, not 40: on a phone this pill and the menu button beside
+              // it are the whole of the navigation, and they are the one
+              // control a parent reaches for. The desktop link row stays at 40
+              // — it is a mouse target, not a thumb target.
+              className="pill min-h-11 px-4 text-sm max-sm:px-3"
               aria-label={`Καλέστε ${therapist.phoneDisplay}`}
             >
               <PhoneIcon className="size-4" />
@@ -95,7 +106,7 @@ export default function Nav() {
               onClick={() => setMenu((v) => !v)}
               aria-expanded={menu}
               aria-controls="mobile-menu"
-              className="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-full px-3 text-sm font-medium text-ink lg:hidden"
+              className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full px-3 text-sm font-medium text-ink lg:hidden"
             >
               <span className="relative block h-3 w-4" aria-hidden>
                 <span
