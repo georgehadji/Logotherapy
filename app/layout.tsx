@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Manrope, Noto_Serif_Display } from "next/font/google";
+import { Manrope } from "next/font/google";
+import localFont from "next/font/local";
 import {
   SITE_URL,
   hours,
@@ -19,14 +20,15 @@ import "./globals.css";
  * omitted on purpose — that is what selects the variable font, so the whole
  * 200–800 range arrives in a single request.
  *
- * The headings are Noto Serif Display, a high-contrast serif cut for large
- * sizes, with a Greek drawn by the same team that drew the Latin. The serif
- * is what makes the headings sound considered rather than promotional; the
- * display cut is what keeps the thin strokes from thickening at 4.75rem.
- * `weight` is omitted here too — the variable file carries the range.
+ * The headings are Libertinus Serif, the OFL continuation of Linux Libertine:
+ * a book serif with a Greek that was drawn, not adapted. It ships as static
+ * weights, and the headings only ever need the bold, so one file covers them.
  *
- * next/font downloads both at build time and serves them from this origin; no
- * request ever leaves for Google.
+ * It is loaded through `next/font/local` rather than the Google loader, whose
+ * metadata for this family still lists Latin at 400 only and would refuse both
+ * the Greek and the weight. The file in `assets/fonts` is Google's own bold,
+ * subsetted to Latin + Greek and compressed to WOFF2 — 36 KB against the 440 KB
+ * original. Either way no request ever leaves for Google at runtime.
  */
 const manrope = Manrope({
   subsets: ["greek", "latin"],
@@ -34,10 +36,16 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const notoSerifDisplay = Noto_Serif_Display({
-  subsets: ["greek", "latin"],
-  variable: "--font-noto-display",
+const libertinusSerif = localFont({
+  src: "../assets/fonts/libertinus-serif-700.woff2",
+  weight: "700",
+  style: "normal",
+  variable: "--font-libertinus",
   display: "swap",
+  // Times is the closest-metric system serif; next/font builds the adjusted
+  // fallback from it, so a swap does not reflow the heads. The rest of the
+  // stack lives on --font-display, and repeating it here only duplicates it.
+  adjustFontFallback: "Times New Roman",
 });
 
 const title = `${therapist.name} — Λογοθεραπεύτρια Νέα Μηχανιώνα Θεσσαλονίκης`;
@@ -161,7 +169,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="el" className={`${manrope.variable} ${notoSerifDisplay.variable}`}>
+    <html lang="el" className={`${manrope.variable} ${libertinusSerif.variable}`}>
       <body className="antialiased">
         <JsonLd data={jsonLd} />
 

@@ -1,7 +1,7 @@
 /* Hallmark · pre-emit critique: P5 H4 E4 S4 R5 V4
  * genre: modern-minimal (soft register) · design-system: design.md · designed-as-app
  * macrostructure: Narrative Workflow (home) · Long Document (content) · Index-First (index)
- * theme: Coral, tuned · paper: light · display: high-contrast serif (Noto Serif Display) over Manrope · accent: terracotta-coral (warm)
+ * theme: Coral, tuned · paper: light · display: book serif (Libertinus Serif) over Manrope · accent: terracotta-coral (warm)
  * enrichment: the practice's own mark, set on a sand plate in the hero
  * nav: N5 floating pill · footer: Ft5 statement
  * H2 knobs: ratio=7/5, right=identity plate, foot=hairline signs band
@@ -68,11 +68,12 @@
    * against a serif so the two never compete. The fallback is the system
    * face whose Greek metrics are closest, so a swap does not reflow the page.
    *
-   * The headings take Noto Serif Display: a high-contrast serif cut for large
-   * sizes, with a Greek drawn alongside the Latin rather than after it. The
-   * fallback is a Greek-capable serif, so a swap keeps the register.
+   * The headings take Libertinus Serif, the OFL continuation of Linux
+   * Libertine: a book serif of even colour, with a Greek that was drawn rather
+   * than adapted. One weight is loaded — the bold — because that is all the
+   * headings ask for.
    */
-  --font-display: var(--font-noto-display), "Palatino Linotype", Palatino, Georgia, serif;
+  --font-display: var(--font-libertinus), "Times New Roman", Georgia, serif;
   --font-sans: var(--font-manrope), "Segoe UI", system-ui, sans-serif;
 
   /* ——— Surfaces ———
@@ -163,9 +164,9 @@
 @layer components {
   .display {
     font-family: var(--font-display);
-    /* A serif carries more weight per stem than a sans: 600 here reads as
-       firmly as 700 did, without the headings turning into slabs. */
-    font-weight: 600;
+    /* One weight is loaded, the bold; asking for anything else here would
+       only invite the browser to synthesise it. */
+    font-weight: 700;
     /* Greek display type carries accents on capitals; the serif's accents sit
        higher still, so the heads get a touch more room than the sans needed. */
     line-height: 1.12;
