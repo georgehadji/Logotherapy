@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { prefersReducedMotion } from "@/lib/motion";
-import { location, photosReady, signs, therapist, therapistImage } from "@/lib/site";
+import { location, signs, therapist } from "@/lib/site";
 import { ArrowRightIcon, PhoneIcon } from "@/components/Icon";
 
 /**
  * An asymmetric opening: the promise on the left at a short measure, the
- * practice's face on the right as a framed plate. The things parents notice
+ * practice's mark on the right as a framed plate — the portrait stays on the
+ * biography page, where a face reads as a person rather than as a banner.
+ * The things parents notice
  * at home used to sit in a bordered card inside the hero, which made the
  * first screen read like a control panel; they now run as a hairline band
  * across the foot of the section, under the fold of the headline.
@@ -102,37 +104,26 @@ export default function Hero() {
           {/* A tall plate is right beside a column of text and wrong stacked
               under one, where it would push the rest of the page off screen. */}
           <figure className="plate aspect-[3/2] md:aspect-[4/5]">
-            {photosReady ? (
+            <div className="flex h-full items-center justify-center gap-5 p-6 max-md:flex-row md:flex-col md:gap-7 md:p-8 md:text-center">
               <img
-                src={therapistImage.src}
-                alt={therapistImage.alt}
-                width={900}
-                height={1125}
+                src="/images/logo-mark.png"
+                alt=""
+                aria-hidden
+                width={480}
+                height={519}
                 fetchPriority="high"
                 decoding="async"
+                className="plate-mark w-[34%] max-w-[9rem] shrink-0 md:w-[62%] md:max-w-[15rem]"
               />
-            ) : (
-              <div className="flex h-full items-center justify-center gap-5 p-6 max-md:flex-row md:flex-col md:gap-7 md:p-8 md:text-center">
-                <img
-                  src="/images/logo-mark.png"
-                  alt=""
-                  aria-hidden
-                  width={480}
-                  height={519}
-                  fetchPriority="high"
-                  decoding="async"
-                  className="plate-mark w-[34%] max-w-[9rem] shrink-0 md:w-[62%] md:max-w-[15rem]"
-                />
-                <figcaption className="min-w-0">
-                  <span className="display block text-base text-ink md:text-xl">
-                    {therapist.name}
-                  </span>
-                  <span className="mt-2 block text-xs uppercase tracking-[0.18em] text-ink-2">
-                    {therapist.title}
-                  </span>
-                </figcaption>
-              </div>
-            )}
+              <figcaption className="min-w-0">
+                <span className="display block text-base text-ink md:text-xl">
+                  {therapist.name}
+                </span>
+                <span className="mt-2 block text-xs uppercase tracking-[0.18em] text-ink-2">
+                  {therapist.title}
+                </span>
+              </figcaption>
+            </div>
           </figure>
         </div>
       </div>

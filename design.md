@@ -142,10 +142,13 @@ container `.shell`: max 80rem, `padding-inline: clamp(1rem, 5vw, 4rem)`.
 - Content pages: typography only; photographs inline at reading width.
 - Index pages: no images.
 
-Every one of those is gated on `photosReady` in `lib/site.ts`, which is
-`false` while `public/images/` holds generated plates. Nothing invented is
-published: the hero falls back to the mark on its plate, and the galleries and
-the portrait stand down until real photographs arrive. See CONTENT.md § 6.
+The hero is the exception: its plate always carries the practice's mark, never
+a photograph. A face in the first screen reads as a banner; the portrait
+belongs on the biography, where it reads as a person.
+
+Everything else is gated on `photosReady` in `lib/site.ts`. While it is
+`false`, the galleries and the portrait stand down and nothing invented is
+published. See CONTENT.md § 6.
 
 Numbers on the page are the same rule. No rating, no counts, no percentages
 unless the practice supplies them — the trust section links to the reviews at
