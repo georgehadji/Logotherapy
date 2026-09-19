@@ -82,9 +82,13 @@ inform. Form-field borders use `ink-3` at 6.4:1.
 Focus ring: 2px `--color-accent`, offset 3px, never animated.
 
 ## Typography
-One family. **Manrope** (variable 200–800, Greek subset), self-hosted through
-`next/font`. Display at **650** (`.display`) and **750** for the page's one
-h1 (`.display-hero`); body 400, 600 for emphasis and labels.
+Two faces. Headings in **Alegreya Sans** (700, and 800 for the page's one h1),
+body in **Manrope** (variable 200–800), both self-hosted through `next/font`
+with the Greek subset. Alegreya Sans is humanist with calligraphic roots: its
+warmth is in the flared stems and open apertures, not in rounding, which is
+what keeps a children's practice from reading as a nursery. Body 400, 600 for
+emphasis and labels. The OG cards carry the same pairing — `assets/fonts` holds
+the static TTFs Satori needs, since it cannot read the CSS custom properties.
 
 - Display tracking −0.022em · line-height 1.08 · `text-wrap: balance`
 - Body tracking +0.004em · `text-wrap: pretty`
@@ -174,7 +178,7 @@ CTA voice; section h2 size, opener shape, label style.
   --color-clay:        oklch(76.1% 0.061 60);
   --color-sand:        oklch(89.1% 0.025 75);
 
-  --font-display: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
   --font-body:    "Manrope", "Segoe UI", system-ui, sans-serif;
 
   --space-xs: 0.5rem; --space-sm: 0.75rem; --space-md: 1rem; --space-lg: 1.5rem;
