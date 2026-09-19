@@ -25,7 +25,7 @@ export default function Footer() {
         <div className="mt-12 grid gap-8 border-t border-line pt-8 text-sm leading-relaxed text-ink-2 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <p className="flex items-center gap-2 font-semibold text-ink">
-              <MarkIcon className="size-4 text-accent" />
+              <MarkIcon className="size-5 shrink-0" />
               {therapist.name}
             </p>
             <p className="mt-1">{therapist.specialty}</p>

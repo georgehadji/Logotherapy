@@ -49,17 +49,24 @@ export function ExternalIcon({ className }: Props) {
 }
 
 /**
- * The wordmark's mark: a rounded speech bubble with a single dot — a word on
- * its way. Filled, so it reads at 20px; the same shape is the favicon.
+ * The practice's own mark, at the sizes the wordmark and the footer use.
+ *
+ * Not an icon, and nothing here is drawn: the full logo is a hairline profile
+ * whose stroke disappears below about 40px, so the small lockup takes the
+ * three petals from it — the one part of the mark that still reads at 20px.
+ * The file is the logo's own pixels, cropped, with its white field keyed to
+ * alpha. The whole mark keeps the hero plate, where it has the room it needs.
  */
 export function MarkIcon({ className }: Props) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden className={className}>
-      <path
-        fill="currentColor"
-        d="M12 3C6.9 3 3 6.5 3 11c0 2.4 1.1 4.5 2.9 6l-.8 3.4a.6.6 0 0 0 .9.7l3.8-2.3c.7.1 1.4.2 2.2.2 5.1 0 9-3.5 9-8s-3.9-8-9-8z"
-      />
-      <circle cx="12" cy="11" r="1.8" fill="var(--color-paper)" />
-    </svg>
+    <img
+      src="/images/logo-petals.png"
+      alt=""
+      aria-hidden
+      width={96}
+      height={96}
+      decoding="async"
+      className={className}
+    />
   );
 }

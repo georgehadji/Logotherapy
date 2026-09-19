@@ -24,15 +24,21 @@ character.
   beneath both, a hairline band of the signs parents notice, each line a link
   to the service that explains it.
 - The page must not run one rhythm end to end. The 12-column split head is the
-  common case, so two sections break it on purpose: the steps band stacks
-  (head at 34rem, rail full width beneath) and the trust section runs flush
-  left with the award cards below, not beside.
+  common case, so three sections break it on purpose: the steps band stacks
+  (head at 34rem, rail full width beneath), the rooms strip stacks the same
+  way (head at 34rem, four photographs across the shell under it), and the
+  trust section runs flush left with the award cards below, not beside. The
+  rooms strip is what keeps the services grid and the therapist from being a
+  run of three identically split sections through the middle of the page.
 - Content pages (`/logotherapeftria`, `/to-kentro`, `/ypiresies/[slug]`,
   `/arthra/[slug]`, `/epikoinonia`, legal): **Long Document** — one reading
   column at 65ch, an opener set like the head of a memo, section heads as
   small tracked phrases in the flow (`.head-inline`), lists as hairline rows.
-- Index pages (`/ypiresies`, `/arthra`, 404): **Index-First** — a label, one
-  sentence, then the list (cards for services, dated rows for articles).
+- Index pages (`/ypiresies`, `/arthra`, 404): **Index-First** — a title, one
+  sentence, then the list (cards for services, dated rows for articles). The
+  title is quieter than a content page's h1 but still display type at the
+  section-h2 anchor: the rows beneath it are already display at
+  1.25–1.5rem, so anything smaller is a page outranked by its own contents.
 
 ## Theme — Coral, tuned
 Warm-grey paper, one terracotta-coral accent. Three diversification axes:
@@ -99,9 +105,14 @@ cannot read the CSS custom properties. Body 400, 600 for emphasis and labels.
   line-height 1.12 (h1 1.08) · `text-wrap: balance`
 - Body tracking +0.004em · `text-wrap: pretty`
 - Anchors: home h1 `clamp(2.4rem, 4.2vw + 1rem, 4.5rem)` · inner h1
-  `clamp(2.1rem, 3.6vw + 0.5rem, 3.6rem)` · section h2
-  `clamp(1.75rem, 2.5vw + 0.5rem, 2.75rem)` · card title 1.125–1.25rem ·
+  `clamp(2.1rem, 3.6vw + 0.5rem, 3.6rem)` · section h2 and index-page h1
+  `clamp(1.75rem, 2.5vw + 0.5rem, 2.75rem)` · list title, FAQ question and
+  article section head 1.25–1.5rem · card title 1.125–1.25rem ·
   body 1–1.125rem · label 0.75rem uppercase, tracking 0.14em
+- `.head-inline` — the small tracked phrase — is for pages of many short
+  sections: services, contact, legal. An article is six sections and seven
+  minutes, so its heads take the display face at the list-title anchor and
+  carry ids, with a contents list above the body from three heads up.
 - No italic anywhere in headings.
 
 ## Spacing
@@ -138,13 +149,20 @@ container `.shell`: max 80rem, `padding-inline: clamp(1rem, 5vw, 4rem)`.
 
 ## Navigation and footer
 - Nav: **N5 floating pill** — sticky, detached, max 52rem, blur backdrop,
-  wordmark with the speech-bubble mark left, link cluster centre, phone pill
-  right. Below `lg` the links fold into a full-screen panel.
+  wordmark with the mark left, link cluster centre, phone pill right. Below
+  `lg` the links fold into a full-screen panel.
+- The mark has two sizes and they are different crops of one file. The hero
+  plate carries the whole logo. The wordmark and the footer carry the three
+  petals alone (`logo-petals.png`, keyed off the logo's white field): the
+  profile is a hairline that turns to grey mush below about 40px, and a
+  generic glyph standing in for it is a practice with no face on its own site.
 - Footer: **Ft5 statement** — one closing sentence in display type, then
   name / address / links in small type, disclaimer last.
 
 ## Per-page allowances
-- Home MAY use the therapist's portrait and two photographs of the rooms.
+- Home MAY use the therapist's portrait and every photograph of the rooms —
+  four of them, as one strip. Half a small space shown is a space with
+  something to hide.
 - Content pages: typography only; photographs inline at reading width.
 - Index pages: no images.
 

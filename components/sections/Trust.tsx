@@ -11,8 +11,10 @@ export default function Trust() {
   return (
     <section className="shell py-12 md:py-16">
       <div className="max-w-[38rem] border-t border-line pt-8">
+        {/* The head says what is under it. "Τι λένε οι οικογένειες" promised
+            testimonials this section does not carry and will not invent. */}
         <h2 className="display text-[clamp(1.75rem,2.5vw+0.5rem,2.75rem)]">
-          Τι λένε οι οικογένειες
+          Αξιολογήσεις και διακρίσεις
         </h2>
         <p className="mt-5 leading-relaxed text-ink-2">
           Οι αξιολογήσεις ανήκουν στους γονείς που τις έγραψαν και δεν

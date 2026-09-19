@@ -55,7 +55,7 @@ export default function Nav() {
             href="/"
             className="flex min-h-11 items-center gap-2 whitespace-nowrap font-semibold tracking-[-0.01em] text-ink"
           >
-            <MarkIcon className="size-5 shrink-0 text-accent" />
+            <MarkIcon className="size-6 shrink-0" />
             {/* Below 26rem the mark alone is the wordmark; sr-only keeps the accessible name. */}
             <span className="max-[26rem]:sr-only">{therapist.brand}</span>
           </Link>

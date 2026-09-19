@@ -4,17 +4,24 @@ import { photosReady, spaceImages } from "@/lib/site";
 import { ArrowRightIcon } from "@/components/Icon";
 
 /**
- * Two rooms on the homepage; the rest of the space lives on /to-kentro. A
- * gallery with nothing real in it is worse than no gallery, so until the
+ * The rooms, as a strip across the width of the page.
+ *
+ * Stacked rather than split on purpose. The two sections above this one — the
+ * services grid and the therapist — both set a head in a narrow column with
+ * the content beside it, and a third in a row would turn the middle of the
+ * homepage into one repeating shape. The head sits at a reading measure and
+ * the rooms run underneath it, all four of them: a gallery that shows half of
+ * a small space reads as a space with something to hide.
+ *
+ * A gallery with nothing real in it is worse than no gallery, so until the
  * photographs arrive the section stands down and the nav carries the route.
  */
 export default function SpaceGallery() {
   if (!photosReady) return null;
-  const pair = spaceImages.slice(0, 2);
 
   return (
-    <section id="to-kentro" className="shell grid gap-10 py-16 md:grid-cols-12 md:gap-12 md:py-24">
-      <div className="md:col-span-4">
+    <section id="to-kentro" className="shell py-16 md:py-24">
+      <div className="max-w-[34rem]">
         <h2 className="display text-[clamp(1.75rem,2.5vw+0.5rem,2.75rem)]">
           Ένας χώρος φτιαγμένος για παιδιά
         </h2>
@@ -31,8 +38,10 @@ export default function SpaceGallery() {
         </Link>
       </div>
 
-      <ul className="grid gap-5 sm:grid-cols-2 md:col-span-8 md:gap-6">
-        {pair.map((img) => (
+      {/* Two across on a phone rather than one: four full-width portraits are
+          four screens of scrolling between the therapist and the articles. */}
+      <ul className="mt-12 grid grid-cols-2 gap-4 md:mt-16 md:grid-cols-4 md:gap-6">
+        {spaceImages.map((img) => (
           <li key={img.src} className="min-w-0">
             <figure>
               <Photo src={img.src} alt={img.alt} caption={img.caption} className="aspect-[4/5] w-full" />

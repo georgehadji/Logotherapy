@@ -53,8 +53,9 @@ export default function YpiresiesPage() {
             {services.map((s) => (
               <li key={s.slug} className="min-w-0">
                 <Link href={`/ypiresies/${s.slug}`} className="card card-link group flex h-full flex-col p-5 md:p-6">
-                  <span className="numeral text-xs font-semibold text-ink-3">{s.n}</span>
-                  <span className="display mt-2 block text-lg leading-snug transition-colors t-quick group-hover:text-accent md:text-xl">
+                  {/* No numerals, the same rule the homepage grid follows: eight
+                      services are a set, not a sequence. */}
+                  <span className="display block text-lg leading-snug transition-colors t-quick group-hover:text-accent md:text-xl">
                     {s.title}
                   </span>
                   <span className="mt-2 block flex-1 text-sm leading-relaxed text-ink-2">{s.text}</span>

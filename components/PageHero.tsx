@@ -4,8 +4,12 @@ export type Crumb = { label: string; href: string };
 
 /**
  * Opener for the inner pages: the trail, the title, an optional running line
- * beneath it, and a lede at reading width. Index pages (`index`) drop the
- * display face — a list needs a label, not a headline.
+ * beneath it, and a lede at reading width.
+ *
+ * Index pages (`index`) are quieter, but not silent: they set the title at the
+ * section-h2 anchor rather than the h1 one. A list page's rows are already
+ * display type at `text-xl md:text-2xl`, so a title below that size is
+ * outranked by its own contents.
  */
 export default function PageHero({
   title,
@@ -50,7 +54,7 @@ export default function PageHero({
         )}
 
         {index ? (
-          <h1 className="mt-4 text-2xl font-semibold text-ink">{title}</h1>
+          <h1 className="display mt-4 text-[clamp(1.75rem,2.5vw+0.5rem,2.75rem)]">{title}</h1>
         ) : (
           <h1 className="display display-hero mt-4 text-[clamp(2.1rem,3.6vw+0.5rem,3.6rem)]">{title}</h1>
         )}

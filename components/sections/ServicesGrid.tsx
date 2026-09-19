@@ -17,9 +17,13 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
           <h2 className="display text-[clamp(1.75rem,2.5vw+0.5rem,2.75rem)]">
             Πού μπορούμε να βοηθήσουμε
           </h2>
+          {/* Not the lede /ypiresies uses: the index page already says what a
+              service page contains, and repeating it here wastes the one
+              paragraph the homepage gets. */}
           <p className="mt-5 leading-relaxed text-ink-2">
-            Από την πρώτη αξιολόγηση έως τη θεραπεία σίτισης και τη νευροαποκατάσταση.
-            Κάθε σελίδα εξηγεί τι περιλαμβάνει, πότε χρειάζεται και πώς δουλεύουμε.
+            Βρέφη, παιδιά και έφηβοι· λόγος και άρθρωση, σίτιση και κατάποση,
+            νευροαποκατάσταση. Διαλέξτε ό,τι μοιάζει πιο κοντά σε αυτό που ζείτε —
+            η σελίδα του το εξηγεί χωρίς όρους που χρειάζονται μετάφραση.
           </p>
           {limit && (
             <Link

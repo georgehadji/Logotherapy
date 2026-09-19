@@ -13,9 +13,12 @@ export default function ArticleTeasers({ limit }: { limit?: number }) {
     <section className="shell grid gap-10 py-12 md:grid-cols-12 md:gap-12 md:py-16">
       <div className="md:col-span-4 md:col-start-9">
         <h2 className="display text-[clamp(1.75rem,2.5vw+0.5rem,2.75rem)]">Άρθρα για γονείς που ψάχνουν</h2>
+        {/* Not the lede /arthra uses: two pages that open with the same
+            sentence make the second one read as boilerplate. */}
         <p className="mt-5 leading-relaxed text-ink-2">
-          Απαντήσεις στα ερωτήματα που ακούγονται συχνότερα στο τηλέφωνο, γραμμένες
-          για να διαβάζονται το βράδυ, όταν το παιδί κοιμήθηκε.
+          Ό,τι δεν προλαβαίνει να ρωτηθεί στο πρώτο τηλεφώνημα, γραμμένο για να
+          διαβαστεί με την ησυχία σας. Χωρίς διάγνωση από απόσταση και χωρίς
+          υποσχέσεις.
         </p>
         <Link
           href="/arthra"

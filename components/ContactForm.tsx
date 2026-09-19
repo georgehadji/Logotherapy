@@ -1,7 +1,7 @@
 "use client";
 
 import { cloneElement, isValidElement, useEffect, useRef, useState } from "react";
-import { contactEmail, services } from "@/lib/site";
+import { contactEmail, services, therapist } from "@/lib/site";
 
 /**
  * The site is a static export, so there is no server of ours to post to.
@@ -49,9 +49,19 @@ export default function ContactForm() {
   const mountedAt = useRef(0);
   const lastSentAt = useRef(0);
   const sentCount = useRef(0);
+  /*
+   * Set on the way in as well as cleared on the way out. A ref that is only
+   * ever cleared stays cleared: StrictMode mounts, unmounts and remounts in
+   * development, so the cleanup ran once and every later response — sent and
+   * failed alike — was dropped on the floor, leaving the reader pressing a
+   * button that answered nothing.
+   */
   const mounted = useRef(true);
-  useEffect(() => () => {
-    mounted.current = false;
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -71,7 +81,7 @@ export default function ContactForm() {
     }
 
     if (sentCount.current >= MAX_PER_SESSION) {
-      setErrors({ form: "Έχετε στείλει ήδη αρκετά μηνύματα. Καλέστε μας τηλεφωνικά." });
+      setErrors({ form: `Έχετε στείλει ήδη αρκετά μηνύματα. Καλέστε στο ${therapist.phoneDisplay}.` });
       return;
     }
     if (Date.now() - lastSentAt.current < COOLDOWN_MS && lastSentAt.current > 0) {
@@ -114,12 +124,25 @@ export default function ContactForm() {
           phone,
           topic: topic || "Γενική ερώτηση",
           message,
-          _subject: "Νέο μήνυμα από την ιστοσελίδα λογοθεραπείας",
+          // The chosen subject travels in the subject line, so the inbox sorts
+          // itself without the message having to be opened first.
+          _subject: `Ιστοσελίδα · ${topic || "Γενική ερώτηση"}`,
           _template: "table",
           _captcha: "false",
         }),
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      /*
+       * The status code is not the answer. FormSubmit replies 200 with
+       * `success: "false"` while the address is still unactivated, and on a
+       * few other refusals — so trusting `res.ok` alone would tell a parent
+       * their message had arrived when nothing was delivered to anyone. The
+       * relay has to say so itself.
+       */
+      const relay = (await res.json().catch(() => null)) as { success?: unknown } | null;
+      if (String(relay?.success ?? "") !== "true") throw new Error("relay declined");
+
       if (!mounted.current) return;
 
       lastSentAt.current = Date.now();
@@ -137,7 +160,11 @@ export default function ContactForm() {
         <p className="display text-3xl md:text-4xl">Το μήνυμα στάλθηκε.</p>
         <p className="mt-4 max-w-md text-ink-2">
           Θα λάβετε απάντηση το συντομότερο δυνατό. Αν θέλετε να κλείσετε ραντεβού άμεσα,
-          καλέστε μας.
+          καλέστε στο{" "}
+          <a href={`tel:${therapist.phone}`} className="font-semibold text-accent link-line-on link-line">
+            {therapist.phoneDisplay}
+          </a>
+          .
         </p>
         <button
           onClick={() => setStatus("idle")}
@@ -221,9 +248,15 @@ export default function ContactForm() {
           {status === "sending" ? "Αποστολή…" : "Αποστολή μηνύματος"}
         </button>
 
+        {/* A failure that only says "try again" leaves the reader with nothing
+            to do; the number is the route that always works. */}
         {status === "error" && (
           <p className="text-sm text-destructive" role="alert">
-            Η αποστολή απέτυχε. Δοκιμάστε ξανά ή καλέστε μας τηλεφωνικά.
+            Η αποστολή απέτυχε. Δοκιμάστε ξανά ή καλέστε στο{" "}
+            <a href={`tel:${therapist.phone}`} className="font-semibold text-destructive link-line-on link-line">
+              {therapist.phoneDisplay}
+            </a>
+            .
           </p>
         )}
 
