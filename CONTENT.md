@@ -66,14 +66,23 @@ live** — four of the rooms and one portrait, as WebP at 1122×1402. They are
 not photographs of this centre and the portrait is not a photograph of
 Ευαγγελία Μπατσικώστα; they were produced from the prompts in `PROMPTS.md`.
 Visitors read the portrait as her, so it needs her sign-off and, properly, a
-real photograph. Replacing them is a straight file swap — same names, same
-folder — and `photosReady = false` withholds all of them again in one edit.
+real photograph. `photosReady = false` withholds all of them again in one edit.
 
-`Logo.png` is the practice's mark as supplied; `logo-mark.png` is the same
-file trimmed and scaled to 480px for the web. It is composited with
-`mix-blend-mode: multiply`, so the white field behind it disappears on any
-light ground — if a transparent PNG or an SVG of the mark ever arrives, it can
-replace `logo-mark.png` directly.
+Replacing one is a file swap — same name, same folder — **plus its `-560.webp`
+sibling**. The export runs with Next's optimiser off, so each photograph is
+written at two widths and the page picks between them; dropping in a new
+1122px file without regenerating the 560px one leaves the old room showing on
+every phone. To regenerate: resize to 560px wide, WebP quality 82.
+
+`Logo.png` is the practice's mark as supplied and is **not used by any code** —
+691 KB that ships to every visitor for nothing, and it can be deleted.
+`logo-mark.png` is the same file trimmed and scaled to 480px, composited with
+`mix-blend-mode: multiply` so its white field disappears on any light ground;
+it is what the hero plate carries. `logo-petals.png` is the three petals cut
+out of it with the white keyed to alpha, for the wordmark and the footer,
+where the hairline profile would be illegible. If a transparent PNG or an SVG
+of the mark ever arrives it can replace `logo-mark.png` directly, and the
+petals should be re-cut from it.
 
 ### 7. Missing from the listings, currently absent from the site
 

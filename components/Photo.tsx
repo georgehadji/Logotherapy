@@ -11,7 +11,18 @@ type Props = {
   height?: number;
   className?: string;
   priority?: boolean;
+  /**
+   * The slot the thumbnail occupies, for picking a width off the srcset. The
+   * default suits one photograph in a reading column; a grid should say how
+   * narrow its cells are, or every cell downloads the full-size file.
+   */
+  sizes?: string;
 };
+
+/** The half-width sibling written next to each photograph. */
+const HALF_W = 560;
+const FULL_W = 1122;
+const half = (src: string) => (src.endsWith(".webp") ? src.replace(/\.webp$/, `-${HALF_W}.webp`) : null);
 
 /**
  * A photograph as a soft plate: hover lifts it, press seats it, click opens
@@ -26,9 +37,13 @@ export default function Photo({
   height = 1125,
   className,
   priority = false,
+  sizes = "(min-width: 768px) 30rem, 92vw",
 }: Props) {
   const [open, setOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
+
+  const small = half(src);
+  const thumbs = small ? `${small} ${HALF_W}w, ${src} ${FULL_W}w` : null;
 
   // State is the source of truth: `close` does not bubble and some engines
   // close the element without dispatching it, so every close path sets state.
@@ -57,8 +72,15 @@ export default function Photo({
   return (
     <>
       <button type="button" onClick={show} aria-label={`Μεγέθυνση: ${alt}`} className={`photo ${className ?? ""}`}>
+        {/* The export runs with `images: { unoptimized: true }`, so there is no
+            optimiser to resize these: the widths are written to disk and the
+            browser picks. Without it a four-up strip on a phone pulls four
+            1122px files into 161px slots. The enlargement below keeps the
+            full-size `src` — that is the one place it is wanted. */}
         <img
           src={src}
+          srcSet={thumbs ?? undefined}
+          sizes={thumbs ? sizes : undefined}
           alt={alt}
           width={width}
           height={height}

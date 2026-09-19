@@ -58,6 +58,7 @@ export default function ToKentroPage() {
                     caption={img.caption}
                     priority={i === 0}
                     className={`w-full ${i === 0 ? "aspect-[16/10]" : "aspect-[4/5]"}`}
+                    sizes={i === 0 ? "(min-width: 640px) 60rem, 92vw" : "(min-width: 640px) 29rem, 92vw"}
                   />
                   <figcaption className="mt-3 text-sm text-ink-2">
                     <span className="numeral text-xs text-ink-3">{String(i + 1).padStart(2, "0")}</span>{" "}

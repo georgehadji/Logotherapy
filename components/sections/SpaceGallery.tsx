@@ -44,7 +44,13 @@ export default function SpaceGallery() {
         {spaceImages.map((img) => (
           <li key={img.src} className="min-w-0">
             <figure>
-              <Photo src={img.src} alt={img.alt} caption={img.caption} className="aspect-[4/5] w-full" />
+              <Photo
+                src={img.src}
+                alt={img.alt}
+                caption={img.caption}
+                className="aspect-[4/5] w-full"
+                sizes="(min-width: 768px) 17rem, 45vw"
+              />
               <figcaption className="mt-3 text-sm text-ink-2">{img.caption}</figcaption>
             </figure>
           </li>
