@@ -1,0 +1,598 @@
+/* Hallmark · pre-emit critique: P5 H4 E4 S4 R5 V4
+ * genre: modern-minimal (soft register) · design-system: design.md · designed-as-app
+ * macrostructure: Narrative Workflow (home) · Long Document (content) · Index-First (index)
+ * theme: Coral, tuned · paper: light · display: geometric-humanist sans (Manrope) · accent: terracotta-coral (warm)
+ * enrichment: none (typography + one hand-drawn SVG mark)
+ * nav: N5 floating pill · footer: Ft5 statement
+ * H2 knobs: ratio=6/6, right=checklist card, divider=negative space
+ * F4 knobs: numbering=1/2/3, layout=vertical rail, connector=line
+ * N5 knobs: width=max 52rem, backdrop=blur+saturate, anchor=top-centred · Ft5 knobs: width=38ch, wordmark=under sentence, rule=hairline
+ * contrast: pass (40–41, measured) · slop: pass (42–45) · honest: pass (46) · chrome: pass (47)
+ * tokens: pass (48) · icons: pass (30) · mobile: pass (34, 49, 50–57)
+ */
+@import "tailwindcss";
+
+@theme {
+  /* ——— Palette ———
+   *
+   * Built in OKLCH, written in hex, every ratio below measured (see design.md).
+   * Two rules hold it together:
+   *
+   *  1. The neutrals are ONE hue. Paper, hairline and the three inks all sit
+   *     at 55–75° — warm grey, the colour of unbleached paper, never a screen
+   *     grey. Chroma stays under 0.02 on every neutral.
+   *  2. One accent, and it is quiet. Terracotta-coral at C 0.12, dark enough
+   *     to be text (5.9:1 on paper) and to carry paper-coloured text on a fill
+   *     (the same 5.9:1 the other way round). Nothing else on the page is
+   *     chromatic except the error red, which is louder on purpose.
+   */
+  --color-paper: #faf6f2;
+  --color-paper-2: #fefcf9;
+  /* Tinted band: the accent at ~8 % over paper. Steps, FAQ, note boxes. */
+  --color-blush: #fdeae2;
+  /* 15.0:1 on paper */
+  --color-ink: #291f19;
+  /* Body copy. 9.4:1 on paper, 8.6:1 on blush */
+  --color-ink-2: #4b4038;
+  /* Labels and 12px text, held to AAA: 6.4:1 on paper, 5.9:1 on blush */
+  --color-ink-3: #645850;
+  /*
+   * Hairlines only, at 1.30:1. They separate; they do not inform. Every
+   * border that is genuinely a control (form fields) uses ink-3 at 6.4:1.
+   */
+  --color-line: #e0d9d2;
+  /* 5.9:1 on paper, both ways round. Links, CTA fill, focus ring, call bar. */
+  --color-accent: #9c4535;
+  /* Soft coral: the step rail and non-text marks. 2.4:1, non-text only. */
+  --color-accent-2: #dc8d7d;
+  /* 6.9:1 on paper. Form errors only. */
+  --color-destructive: #a1252f;
+
+  /* ——— Type ———
+   * One family. Manrope is a geometric-humanist sans with a Greek drawn as a
+   * first language and a variable weight axis, so the display can sit at 650
+   * and the body at 400 from a single file. The fallback is the system face
+   * whose Greek metrics are closest, so a swap does not reflow the page.
+   */
+  --font-display: var(--font-manrope), "Segoe UI", system-ui, sans-serif;
+  --font-sans: var(--font-manrope), "Segoe UI", system-ui, sans-serif;
+
+  /* ——— Surfaces ———
+   * Soft, not hard: a card is a sheet resting on the paper, lit from above.
+   * Two layers — a tight contact shadow and a wide ambient one — so the
+   * elevation reads as height, not as a drop-shadow preset.
+   */
+  --radius-card: 12px;
+  --radius-input: 8px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgb(41 31 25 / 0.05), 0 12px 32px -16px rgb(41 31 25 / 0.18);
+  --shadow-card-hover: 0 1px 2px rgb(41 31 25 / 0.05), 0 20px 40px -18px rgb(41 31 25 / 0.24);
+  --shadow-pill: 0 1px 2px rgb(41 31 25 / 0.06), 0 8px 24px -12px rgb(41 31 25 / 0.2);
+
+  /* ——— Interaction system ———
+   * Duration follows distance: a colour swap gets `quick`; a panel that
+   * travels the height of the screen gets `page`. Exits run at ~60 % of the
+   * entrance, because a UI that lingers on the way out reads as sluggish.
+   */
+  --dur-tap: 90ms;
+  --dur-quick: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 560ms;
+  --dur-page: 900ms;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-quart: cubic-bezier(0.5, 0, 0.75, 0);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ——— Stacking scale ——— */
+  --z-raised: 10;
+  --z-sticky: 50;
+  --z-callbar: 65;
+  --z-overlay: 75;
+  --z-nav: 80;
+  --z-skip: 100;
+}
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    background: var(--color-paper);
+    scroll-behavior: smooth;
+    /* clip, not hidden: hidden turns the root into a scroll container and breaks sticky/fixed descendants */
+    overflow-x: clip;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    /* Greek text sets tighter than Latin at the same size; open it back up a touch. */
+    letter-spacing: 0.004em;
+    text-wrap: pretty;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Uppercase Greek eyebrows need room; 0.14em keeps the accented capitals legible. */
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--color-ink-3);
+  }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    /* 650: 600 reads as body copy at 64px, 700 reads as a warning. Variable axis. */
+    font-weight: 650;
+    /* Greek display type carries accents on capitals; 1.08 keeps them off the line above. */
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+
+  /* The page's one headline: heavier and tighter than the section heads. */
+  .display-hero {
+    font-weight: 750;
+    letter-spacing: -0.03em;
+  }
+
+  /* A sheet resting on the paper. */
+  .card {
+    background: var(--color-paper-2);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* A card you can go somewhere from: it lifts two pixels, and only that. */
+  .card-link {
+    transition:
+      transform var(--dur-base) var(--ease-out-quart),
+      box-shadow var(--dur-base) var(--ease-out-quart),
+      border-color var(--dur-quick) var(--ease-standard);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card-link:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card-hover);
+      border-color: var(--color-accent-2);
+    }
+  }
+  .card-link:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-card);
+    transition-duration: var(--dur-tap);
+  }
+
+  /* A tinted note: blush ground, no border, no shadow. */
+  .note {
+    background: var(--color-blush);
+    border-radius: var(--radius-card);
+  }
+
+  /*
+   * A photograph as a soft plate. Hover lifts it; press seats it; click opens
+   * it in a native <dialog>. The button carries the frame itself, so the focus
+   * ring, the shadow and the hit area are one box.
+   */
+  .photo {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: var(--color-blush);
+    box-shadow: var(--shadow-card);
+    cursor: zoom-in;
+    transition:
+      transform var(--dur-base) var(--ease-out-quart),
+      box-shadow var(--dur-base) var(--ease-out-quart);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .photo:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-card-hover);
+    }
+  }
+  .photo:active {
+    transform: translateY(0);
+    transition-duration: var(--dur-tap);
+  }
+  .photo > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lightbox {
+    max-width: min(92vw, 1100px);
+    max-height: 92vh;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-card);
+    background: var(--color-paper);
+    box-shadow: var(--shadow-card-hover);
+    color: var(--color-ink);
+    overflow: hidden;
+  }
+  .lightbox::backdrop {
+    background: color-mix(in srgb, var(--color-ink) 72%, transparent);
+  }
+  .lightbox img {
+    display: block;
+    max-height: calc(92vh - 3.5rem);
+    max-width: 100%;
+    width: auto;
+    margin-inline: auto;
+    object-fit: contain;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .lightbox[open] {
+      animation: lightbox-in var(--dur-base) var(--ease-out-quart);
+    }
+    .lightbox[open]::backdrop {
+      animation: lightbox-fade var(--dur-quick) var(--ease-standard);
+    }
+  }
+  @keyframes lightbox-in {
+    from {
+      transform: translateY(8px);
+      opacity: 0;
+    }
+  }
+  @keyframes lightbox-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  /* Figures that should line up in a column. */
+  .numeral {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+
+  .shell {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 5vw, 4rem);
+  }
+
+  /* ——— Interaction utilities ——— */
+  .t-quick {
+    transition-duration: var(--dur-quick);
+    transition-timing-function: var(--ease-standard);
+  }
+  .t-base {
+    transition-duration: var(--dur-base);
+    transition-timing-function: var(--ease-out-quart);
+  }
+  .t-slow {
+    transition-duration: var(--dur-slow);
+    transition-timing-function: var(--ease-expo);
+  }
+
+  /* Press feedback: touch has no hover, so contact is the only answer the interface can give. */
+  .press {
+    transition: transform var(--dur-tap) var(--ease-standard);
+  }
+  .press:active {
+    transform: scale(0.97);
+  }
+  .press-sm {
+    transition: transform var(--dur-tap) var(--ease-standard);
+  }
+  .press-sm:active {
+    transform: scale(0.99);
+  }
+
+  /* Underline that grows from the leading edge. background-size composites; text-decoration does not. */
+  .link-line {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size var(--dur-base) var(--ease-out-quart);
+    padding-bottom: 2px;
+  }
+  .link-line:hover,
+  .link-line:focus-visible {
+    background-size: 100% 1px;
+  }
+  .link-line-on {
+    background-size: 100% 1px;
+  }
+  .link-line-on:hover {
+    background-size: 0% 1px;
+  }
+
+  .hairline {
+    border-top: 1px solid var(--color-line);
+  }
+
+  /* ——— CTA voice ———
+   * Primary: a filled pill in the accent, paper text, soft shadow. It lifts
+   * one pixel on hover and seats on press. The only filled surfaces on the
+   * site are this pill and the mobile call bar.
+   */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.625rem 1.375rem;
+    line-height: 1.5;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    color: var(--color-paper);
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: var(--shadow-pill);
+    transition:
+      transform var(--dur-base) var(--ease-out-quart),
+      box-shadow var(--dur-base) var(--ease-out-quart),
+      filter var(--dur-quick) var(--ease-standard);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .pill:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.06);
+      box-shadow: var(--shadow-card-hover);
+    }
+  }
+  .pill:active {
+    transform: translateY(0);
+    filter: brightness(0.96);
+    box-shadow: var(--shadow-pill);
+    transition-duration: var(--dur-tap);
+  }
+  .pill:focus-visible {
+    outline-offset: 4px;
+  }
+
+  /* Secondary: the same pill, outlined, no fill. */
+  .pill-outline {
+    background: transparent;
+    color: var(--color-ink);
+    border: 1px solid var(--color-ink-3);
+    box-shadow: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .pill-outline:hover {
+      filter: none;
+      border-color: var(--color-ink);
+      background: var(--color-paper-2);
+      box-shadow: var(--shadow-pill);
+    }
+  }
+  .pill-outline:active {
+    filter: none;
+    box-shadow: none;
+  }
+
+  /* Section head on the reading pages: a small tracked phrase in the flow of the text. */
+  .head-inline {
+    padding-top: 1rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+}
+
+/*
+ * Entrance animations are CSS keyframes that end at the visible state, and the
+ * trigger class is purely additive: no class, no animation, content visible.
+ * The failure mode is "no animation", never "no content".
+ */
+@keyframes intro-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.intro-stage.is-intro .intro-item {
+  animation: intro-up 0.9s var(--ease-expo) both;
+  animation-delay: calc(var(--i, 0) * 70ms + var(--d, 0ms));
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-stage.is-intro .intro-item {
+    animation: none;
+  }
+}
+
+/*
+ * ——— Scroll-linked reveal ———
+ * Driven by scroll position, not an observer. It rises; it does not fade —
+ * an inactive timeline holds the `from` state, and a `from` of opacity 0
+ * would be a page with no content on it. Worst case: a section 12px low.
+ * Off below 40rem: mobile scroll has its own physics.
+ */
+@keyframes reveal-rise {
+  from {
+    transform: translateY(12px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 40rem) {
+    .reveal,
+    #main > section:not(:first-of-type) {
+      animation: reveal-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 45%;
+    }
+  }
+}
+
+/*
+ * ——— Row links ———
+ * Index rows. A rule grows down the leading edge on approach and the row
+ * warms by one step. Nothing moves horizontally.
+ */
+.row-link {
+  position: relative;
+}
+.row-link::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: -1px;
+  bottom: -1px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--color-accent);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform var(--dur-base) var(--ease-out-quart);
+}
+@media (hover: hover) {
+  .row-link:hover::before {
+    transform: scaleY(1);
+  }
+}
+.row-link:focus-visible::before,
+.row-link:active::before {
+  transform: scaleY(1);
+}
+
+/*
+ * Form control. Rounded field, one-pixel border in every state; only the
+ * colour moves, and the focus ring is a soft halo, so nothing shifts.
+ */
+.field {
+  border-radius: var(--radius-input);
+  transition:
+    border-color var(--dur-quick) var(--ease-standard),
+    box-shadow var(--dur-quick) var(--ease-standard);
+}
+.field:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 18%, transparent);
+  outline: none;
+}
+
+/* Indeterminate progress under the submit pill: it travels, it does not pretend to fill. */
+@keyframes sending-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+.sending {
+  position: relative;
+  overflow: hidden;
+}
+.sending::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  width: 33%;
+  background: var(--color-paper);
+  animation: sending-sweep 1.1s var(--ease-standard) infinite;
+}
+
+/* ——— Disclosure ——— FAQ answers open at the site's speed; without interpolate-size they simply appear. */
+@supports (interpolate-size: allow-keywords) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+  details::details-content {
+    block-size: 0;
+    overflow: hidden;
+    transition:
+      block-size var(--dur-base) var(--ease-out-quart),
+      content-visibility var(--dur-base) var(--ease-out-quart) allow-discrete;
+  }
+  details[open]::details-content {
+    block-size: auto;
+  }
+}
+
+/*
+ * ——— The step rail ———
+ * A vertical line joins the five numerals on the homepage. It is drawn by the
+ * list, not by each item, so it never breaks between rows.
+ */
+.rail {
+  position: relative;
+}
+.rail::before {
+  content: "";
+  position: absolute;
+  left: 1.375rem;
+  top: 1.5rem;
+  bottom: 1.5rem;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--color-accent-2);
+  opacity: 0.55;
+}
+
+/*
+ * ——— Page transitions ———
+ * Cross-document, one at-rule. The floating nav is named, so it holds still
+ * while the page beneath it changes.
+ */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-group(nav) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
