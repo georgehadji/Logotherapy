@@ -36,7 +36,7 @@ character.
 
 ## Theme — Coral, tuned
 Warm-grey paper, one terracotta-coral accent. Three diversification axes:
-paper **light** · display **geometric-humanist sans** · accent **warm**.
+paper **light** · display **high-contrast serif** · accent **warm**.
 (Differs from the Veterinerian source on display style and accent hue.)
 
 **The two rules that generate the palette.**
@@ -82,15 +82,19 @@ inform. Form-field borders use `ink-3` at 6.4:1.
 Focus ring: 2px `--color-accent`, offset 3px, never animated.
 
 ## Typography
-Two faces. Headings in **Alegreya Sans** (700, and 800 for the page's one h1),
-body in **Manrope** (variable 200–800), both self-hosted through `next/font`
-with the Greek subset. Alegreya Sans is humanist with calligraphic roots: its
-warmth is in the flared stems and open apertures, not in rounding, which is
-what keeps a children's practice from reading as a nursery. Body 400, 600 for
-emphasis and labels. The OG cards carry the same pairing — `assets/fonts` holds
-the static TTFs Satori needs, since it cannot read the CSS custom properties.
+Two faces. Headings in **Noto Serif Display** (600, and 700 for the page's one
+h1), body in **Manrope** (variable 200–800), both self-hosted through
+`next/font` with the Greek subset. Noto Serif Display is a high-contrast serif
+cut for large sizes, with a Greek drawn alongside the Latin: the serif is what
+makes the headings sound considered rather than promotional, and the display
+cut is what holds the thin strokes together at 4.75rem. A serif carries more
+weight per stem than a sans, so the heads sit a weight lower than the sans
+pairing did. Body 400, 600 for emphasis and labels. The OG cards carry the same
+pairing — `assets/fonts` holds the static TTFs Satori needs, since it cannot
+read the CSS custom properties.
 
-- Display tracking −0.022em · line-height 1.08 · `text-wrap: balance`
+- Display tracking −0.012em (h1 −0.018em) · line-height 1.12 (h1 1.08) ·
+  `text-wrap: balance`
 - Body tracking +0.004em · `text-wrap: pretty`
 - Anchors: home h1 `clamp(2.4rem, 4.2vw + 1rem, 4.5rem)` · inner h1
   `clamp(2.1rem, 3.6vw + 0.5rem, 3.6rem)` · section h2
@@ -181,7 +185,7 @@ CTA voice; section h2 size, opener shape, label style.
   --color-clay:        oklch(76.1% 0.061 60);
   --color-sand:        oklch(89.1% 0.025 75);
 
-  --font-display: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Noto Serif Display", "Palatino Linotype", Georgia, serif;
   --font-body:    "Manrope", "Segoe UI", system-ui, sans-serif;
 
   --space-xs: 0.5rem; --space-sm: 0.75rem; --space-md: 1rem; --space-lg: 1.5rem;

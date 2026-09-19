@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Alegreya_Sans, Manrope } from "next/font/google";
+import { Manrope, Noto_Serif_Display } from "next/font/google";
 import {
   SITE_URL,
   hours,
@@ -19,10 +19,11 @@ import "./globals.css";
  * omitted on purpose — that is what selects the variable font, so the whole
  * 200–800 range arrives in a single request.
  *
- * The headings are Alegreya Sans, a humanist sans with calligraphic roots and
- * a Greek by the same hand. Its warmth is in the letterforms — the flared
- * stems, the open apertures — not in roundness, which is what keeps it on the
- * right side of friendly. Only the two display weights are fetched.
+ * The headings are Noto Serif Display, a high-contrast serif cut for large
+ * sizes, with a Greek drawn by the same team that drew the Latin. The serif
+ * is what makes the headings sound considered rather than promotional; the
+ * display cut is what keeps the thin strokes from thickening at 4.75rem.
+ * `weight` is omitted here too — the variable file carries the range.
  *
  * next/font downloads both at build time and serves them from this origin; no
  * request ever leaves for Google.
@@ -33,10 +34,9 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const alegreyaSans = Alegreya_Sans({
+const notoSerifDisplay = Noto_Serif_Display({
   subsets: ["greek", "latin"],
-  weight: ["700", "800"],
-  variable: "--font-alegreya",
+  variable: "--font-noto-display",
   display: "swap",
 });
 
@@ -161,7 +161,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="el" className={`${manrope.variable} ${alegreyaSans.variable}`}>
+    <html lang="el" className={`${manrope.variable} ${notoSerifDisplay.variable}`}>
       <body className="antialiased">
         <JsonLd data={jsonLd} />
 

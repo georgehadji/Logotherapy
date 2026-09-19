@@ -16,8 +16,8 @@ const asset = (...p: string[]) => join(process.cwd(), ...p);
  */
 const manropeBold = readFileSync(asset("assets", "fonts", "manrope-700.ttf"));
 const manrope = readFileSync(asset("assets", "fonts", "manrope-400.ttf"));
-/* The card's headline follows the page's: Alegreya Sans, not Manrope. */
-const alegreyaBold = readFileSync(asset("assets", "fonts", "alegreya-sans-700.ttf"));
+/* The card's headline follows the page's: Noto Serif Display, not Manrope. */
+const notoSerifDisplayBold = readFileSync(asset("assets", "fonts", "noto-serif-display-700.ttf"));
 
 // Mirrors app/globals.css. Satori cannot read CSS custom properties.
 const PAPER = "#faf6f2";
@@ -82,13 +82,13 @@ export function ogImage({
           <div style={{ display: "flex", flexDirection: "column" }}>
             <div
               style={{
-                fontFamily: "Alegreya Sans",
+                fontFamily: "Noto Serif Display",
                 fontSize: title.length > 46 ? 58 : 76,
                 fontWeight: 700,
-                lineHeight: 1.1,
+                lineHeight: 1.12,
                 color: INK,
                 maxWidth: 940,
-                letterSpacing: -1.6,
+                letterSpacing: -1,
               }}
             >
               {title}
@@ -130,7 +130,7 @@ export function ogImage({
       fonts: [
         { name: "Manrope", data: manrope, style: "normal", weight: 400 },
         { name: "Manrope", data: manropeBold, style: "normal", weight: 700 },
-        { name: "Alegreya Sans", data: alegreyaBold, style: "normal", weight: 700 },
+        { name: "Noto Serif Display", data: notoSerifDisplayBold, style: "normal", weight: 700 },
       ],
     }
   );

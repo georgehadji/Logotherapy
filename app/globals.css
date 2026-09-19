@@ -1,7 +1,7 @@
 /* Hallmark · pre-emit critique: P5 H4 E4 S4 R5 V4
  * genre: modern-minimal (soft register) · design-system: design.md · designed-as-app
  * macrostructure: Narrative Workflow (home) · Long Document (content) · Index-First (index)
- * theme: Coral, tuned · paper: light · display: geometric-humanist sans (Manrope) · accent: terracotta-coral (warm)
+ * theme: Coral, tuned · paper: light · display: high-contrast serif (Noto Serif Display) over Manrope · accent: terracotta-coral (warm)
  * enrichment: the practice's own mark, set on a sand plate in the hero
  * nav: N5 floating pill · footer: Ft5 statement
  * H2 knobs: ratio=7/5, right=identity plate, foot=hairline signs band
@@ -63,16 +63,16 @@
   --color-sand: #e5d9c9;
 
   /* ——— Type ———
-   * One family. Manrope is a geometric-humanist sans with a Greek drawn as a
-   * first language and a variable weight axis. The fallback is the system
+   * Two families. Manrope carries the paragraphs: a geometric-humanist sans
+   * with a Greek drawn as a first language and a variable weight axis, set
+   * against a serif so the two never compete. The fallback is the system
    * face whose Greek metrics are closest, so a swap does not reflow the page.
    *
-   * The headings take Alegreya Sans instead: a humanist sans whose warmth
-   * comes from flared stems and open apertures rather than from rounding, so
-   * it reads friendly without reading like a nursery. Its Greek is drawn, not
-   * derived.
+   * The headings take Noto Serif Display: a high-contrast serif cut for large
+   * sizes, with a Greek drawn alongside the Latin rather than after it. The
+   * fallback is a Greek-capable serif, so a swap keeps the register.
    */
-  --font-display: var(--font-alegreya), "Segoe UI", system-ui, sans-serif;
+  --font-display: var(--font-noto-display), "Palatino Linotype", Palatino, Georgia, serif;
   --font-sans: var(--font-manrope), "Segoe UI", system-ui, sans-serif;
 
   /* ——— Surfaces ———
@@ -163,11 +163,15 @@
 @layer components {
   .display {
     font-family: var(--font-display);
-    /* Alegreya Sans ships static weights; 700 is its display bold. */
-    font-weight: 700;
-    /* Greek display type carries accents on capitals; 1.08 keeps them off the line above. */
-    line-height: 1.08;
-    letter-spacing: -0.022em;
+    /* A serif carries more weight per stem than a sans: 600 here reads as
+       firmly as 700 did, without the headings turning into slabs. */
+    font-weight: 600;
+    /* Greek display type carries accents on capitals; the serif's accents sit
+       higher still, so the heads get a touch more room than the sans needed. */
+    line-height: 1.12;
+    /* High-contrast serifs need their sidebearings; the sans's -0.022em
+       closed the thin strokes up until they touched. */
+    letter-spacing: -0.012em;
     text-wrap: balance;
     overflow-wrap: anywhere;
     min-width: 0;
@@ -175,8 +179,11 @@
 
   /* The page's one headline: heavier and tighter than the section heads. */
   .display-hero {
-    font-weight: 800;
-    letter-spacing: -0.025em;
+    font-weight: 700;
+    /* An inner h1 runs to three lines; the serif's accents need the extra
+       hundredth or the tonos lands under the descender above it. */
+    line-height: 1.08;
+    letter-spacing: -0.018em;
   }
 
   /* A sheet resting on the paper. */
