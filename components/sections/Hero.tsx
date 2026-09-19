@@ -58,13 +58,18 @@ export default function Hero() {
             className="intro-item mt-9 flex flex-wrap items-center gap-x-6 gap-y-4"
             style={{ "--i": 3 } as React.CSSProperties}
           >
+            {/* The number is in the label, not behind it. A `tel:` link whose
+                text reads "book an appointment" is a dead end on a desktop,
+                where tapping it opens nothing the reader wanted; with the
+                number showing, the same pill is dialled on a phone and read
+                off a laptop. This is the CTA voice design.md already set. */}
             <a
               href={`tel:${therapist.phone}`}
-              aria-label={`Κλείστε ραντεβού — τηλέφωνο ${therapist.phoneDisplay}`}
+              aria-label={`Καλέστε το κέντρο στο ${therapist.phoneDisplay}`}
               className="pill max-sm:w-full"
             >
               <PhoneIcon className="size-4" />
-              Κλείστε ραντεβού
+              Καλέστε {therapist.phoneDisplay}
             </a>
             <Link
               href="/ypiresies"

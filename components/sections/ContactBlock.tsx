@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRightIcon, ExternalIcon } from "@/components/Icon";
+import MapEmbed from "@/components/MapEmbed";
 import { hours, location, therapist } from "@/lib/site";
 
 /** Phone, address and the map. The form lives on /epikoinonia. */
@@ -60,17 +61,10 @@ export default function ContactBlock({ withForm = false }: { withForm?: boolean 
             </a>
           </div>
 
-          <div className="mt-5 aspect-[4/3] w-full overflow-hidden rounded-[var(--radius-card)] border border-line bg-paper md:aspect-[3/2]">
-            <iframe
-              src={location.mapsEmbed}
-              title={`Χάρτης: ${location.line}`}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen={false}
-              className="size-full grayscale-[0.35] contrast-[1.05]"
-            />
-          </div>
-          <p className="mt-2 text-xs text-ink-3">Χάρτης Google · φορτώνεται μόνο όταν εμφανιστεί στην οθόνη.</p>
+          <MapEmbed />
+          <p className="mt-2 text-xs text-ink-3">
+            Ο χάρτης είναι του Google και φορτώνεται μόνο αν τον ζητήσετε.
+          </p>
         </div>
       </div>
     </section>

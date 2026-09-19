@@ -142,6 +142,10 @@ container `.shell`: max 80rem, `padding-inline: clamp(1rem, 5vw, 4rem)`.
 ## CTA voice
 - Primary `.pill`: filled accent, paper text, soft shadow, 48px min height,
   verb + object («Καλέστε 23920 36417»). Lifts 1px on hover, seats on press.
+  The number belongs in the label, including the hero's. A `tel:` pill reading
+  only «Κλείστε ραντεβού» is a dead end on a desktop, where the tap opens
+  nothing; with the number showing, one pill is dialled on a phone and read
+  off a laptop.
 - Secondary: typographic link, semibold accent, persistent 1px underline that
   retracts on hover, arrow icon.
 - Outlined `.pill-outline` exists for a tertiary action; unused on v1.
@@ -158,6 +162,15 @@ container `.shell`: max 80rem, `padding-inline: clamp(1rem, 5vw, 4rem)`.
   generic glyph standing in for it is a practice with no face on its own site.
 - Footer: **Ft5 statement** — one closing sentence in display type, then
   name / address / links in small type, disclaimer last.
+
+## Third parties
+Nothing loads from another origin until the reader asks for it. The contact
+block closes the homepage and every content page, so its map would otherwise
+be a Google frame on eleven pages, for readers who came about their child's
+speech and will never open it — lazy loading delays that request, it does not
+decline it. The map's ground carries the address in the practice's own type
+and one press brings Google in. Never a picture of a map standing in for the
+map: a plate that says what it is beats a photograph that pretends.
 
 ## Per-page allowances
 - Home MAY use the therapist's portrait and every photograph of the rooms —

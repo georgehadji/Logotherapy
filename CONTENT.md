@@ -74,9 +74,11 @@ written at two widths and the page picks between them; dropping in a new
 1122px file without regenerating the 560px one leaves the old room showing on
 every phone. To regenerate: resize to 560px wide, WebP quality 82.
 
-`Logo.png` is the practice's mark as supplied and is **not used by any code** —
-691 KB that ships to every visitor for nothing, and it can be deleted.
-`logo-mark.png` is the same file trimmed and scaled to 480px, composited with
+`Logo.png`, the mark as supplied, used to sit here unreferenced — 691 KB
+shipping to every visitor for nothing — and has been removed. It is still in
+the history if the original is ever wanted again.
+
+`logo-mark.png` is that file trimmed and scaled to 480px, composited with
 `mix-blend-mode: multiply` so its white field disappears on any light ground;
 it is what the hero plate carries. `logo-petals.png` is the three petals cut
 out of it with the white keyed to alpha, for the wordmark and the footer,
