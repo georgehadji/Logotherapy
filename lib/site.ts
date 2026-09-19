@@ -45,19 +45,6 @@ export const therapist = {
     { label: "Διαγνωστικά εργαλεία", detail: "Bayley Scales · DTLA-3/4" },
     { label: "Μέθοδοι επικοινωνίας και παρέμβασης", detail: "TEACCH · PECS · Makaton · Palin PCI · ΣΙΜΑΤΑ" },
   ] as const,
-  /**
-   * Google Maps rating as reported by a public ranking site. Shown as text
-   * with its source; never emitted as schema.org aggregateRating, because
-   * ratings a business republishes about itself are excluded from rich
-   * results and a stale count in the graph is worse than none.
-   */
-  rating: {
-    value: 5,
-    count: 28,
-    source: "Google",
-    reportedBy: "Χρυσή Εταιρεία",
-    sourceUrl: "https://www.xrysietairia.eu/company/lilia-mpatsikosta-255214",
-  },
   awards: [
     {
       label: "Αετοί της Υγείας",
@@ -459,6 +446,15 @@ export const faq = [
     a: `Στη Νέα Μηχανιώνα, ${location.street}, λίγα λεπτά από την Επανομή, την Αγία Τριάδα και την Περαία.`,
   },
 ] as const;
+
+/**
+ * The one switch for photography. `false` while `public/images/` holds
+ * generated placeholders: the gallery, the portrait and the hero plate all
+ * read this flag and fall back to type instead of shipping invented pictures
+ * of a real practice. Flip to `true` the day real photographs land — nothing
+ * else needs to change.
+ */
+export const photosReady = false;
 
 /**
  * Photographs of the space. Every file is a generated placeholder until the

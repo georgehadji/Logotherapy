@@ -73,8 +73,9 @@ export const viewport: Viewport = {
  * stubs, so search and answer engines see one entity.
  *
  * No `geo` block: the address has not been resolved to verified coordinates.
- * No `aggregateRating`: see `therapist.rating` in lib/site.ts. No opening
- * hours: none are published — see CONTENT.md.
+ * No `aggregateRating`: the practice's Google rating is not republished on
+ * the site, so it is not claimed in the graph either. No opening hours: none
+ * are published — see CONTENT.md.
  */
 const jsonLd = {
   "@context": "https://schema.org",

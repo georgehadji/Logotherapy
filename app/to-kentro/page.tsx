@@ -6,7 +6,7 @@ import JsonLd from "@/components/JsonLd";
 import Photo from "@/components/Photo";
 import Steps from "@/components/sections/Steps";
 import ContactBlock from "@/components/sections/ContactBlock";
-import { SITE_URL, location, pageMetadata, spaceImages, therapist } from "@/lib/site";
+import { SITE_URL, location, pageMetadata, photosReady, spaceImages, therapist } from "@/lib/site";
 
 export const metadata: Metadata = pageMetadata({
   title: "Το Κέντρο | Κέντρο Λογοθεραπείας Νέα Μηχανιώνα Θεσσαλονίκης",
@@ -47,6 +47,7 @@ export default function ToKentroPage() {
           </div>
 
           {/* Reading width, not full bleed: the photographs are inline with the page, like plates in a book. */}
+          {photosReady && (
           <ul className="mt-10 grid max-w-[60rem] gap-6 sm:grid-cols-2">
             {spaceImages.map((img, i) => (
               <li key={img.src} className={i === 0 ? "min-w-0 sm:col-span-2" : "min-w-0"}>
@@ -66,6 +67,7 @@ export default function ToKentroPage() {
               </li>
             ))}
           </ul>
+          )}
         </section>
 
         <Steps />

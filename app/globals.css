@@ -2,10 +2,10 @@
  * genre: modern-minimal (soft register) · design-system: design.md · designed-as-app
  * macrostructure: Narrative Workflow (home) · Long Document (content) · Index-First (index)
  * theme: Coral, tuned · paper: light · display: geometric-humanist sans (Manrope) · accent: terracotta-coral (warm)
- * enrichment: none (typography + one hand-drawn SVG mark)
+ * enrichment: the practice's own mark, set on a sand plate in the hero
  * nav: N5 floating pill · footer: Ft5 statement
- * H2 knobs: ratio=6/6, right=checklist card, divider=negative space
- * F4 knobs: numbering=1/2/3, layout=vertical rail, connector=line
+ * H2 knobs: ratio=7/5, right=identity plate, foot=hairline signs band
+ * F4 knobs: numbering=1/2/3, layout=vertical rail, connector=line, head=stacked
  * N5 knobs: width=max 52rem, backdrop=blur+saturate, anchor=top-centred · Ft5 knobs: width=38ch, wordmark=under sentence, rule=hairline
  * contrast: pass (40–41, measured) · slop: pass (42–45) · honest: pass (46) · chrome: pass (47)
  * tokens: pass (48) · icons: pass (30) · mobile: pass (34, 49, 50–57)
@@ -47,6 +47,20 @@
   --color-accent-2: #dc8d7d;
   /* 6.9:1 on paper. Form errors only. */
   --color-destructive: #a1252f;
+
+  /* ——— The practice's own three ———
+   * Lifted off the logo: olive is the line of the profile, clay and sand are
+   * two of the three petals. They are a second register for the hero — the
+   * one place that has to carry the practice's face rather than its
+   * wayfinding — and they do not travel to the rest of the page.
+   *
+   * Measured: olive 4.70:1 on paper (small text passes, and only on paper —
+   * on sand it drops to 3.63 and becomes non-text). Clay 2.01:1: rules and
+   * ornament, never text. Sand is a ground; ink sits on it at 11.58:1.
+   */
+  --color-olive: #657267;
+  --color-clay: #cfa98b;
+  --color-sand: #e5d9c9;
 
   /* ——— Type ———
    * One family. Manrope is a geometric-humanist sans with a Greek drawn as a
@@ -452,8 +466,7 @@
 }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) and (min-width: 40rem) {
-    .reveal,
-    #main > section:not(:first-of-type) {
+    .reveal {
       animation: reveal-rise linear both;
       animation-timeline: view();
       animation-range: entry 5% entry 45%;
@@ -490,6 +503,33 @@
 .row-link:focus-visible::before,
 .row-link:active::before {
   transform: scaleY(1);
+}
+
+/*
+ * ——— The hero plate ———
+ * One framed surface on the page that is neither card nor photograph: a sand
+ * ground with a hairline, holding either the portrait or, until one exists,
+ * the practice's mark and name. The mark is a PNG on a white field, so it is
+ * composited with `multiply` — white takes the ground colour and no keyed
+ * file is needed. `isolation` keeps the blend inside the plate.
+ */
+.plate {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+  background: var(--color-sand);
+  box-shadow: var(--shadow-card);
+}
+.plate > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.plate-mark {
+  mix-blend-mode: multiply;
 }
 
 /*

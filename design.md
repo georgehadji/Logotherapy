@@ -20,8 +20,13 @@ character.
 - Home: **Narrative Workflow** — the spine is the five real stages a family
   goes through (first call → assessment → plan → sessions → re-assessment),
   set as a numbered rail on a blush band directly under the hero. Hero H2
-  split (6/6): promise left, a checklist card of the signs parents notice
-  right; every line of the card is a link to the service that explains it.
+  split (7/5): promise left at a 16ch measure, the practice's plate right;
+  beneath both, a hairline band of the signs parents notice, each line a link
+  to the service that explains it.
+- The page must not run one rhythm end to end. The 12-column split head is the
+  common case, so two sections break it on purpose: the steps band stacks
+  (head at 34rem, rail full width beneath) and the trust section runs flush
+  left with the award cards below, not beside.
 - Content pages (`/logotherapeftria`, `/to-kentro`, `/ypiresies/[slug]`,
   `/arthra/[slug]`, `/epikoinonia`, legal): **Long Document** — one reading
   column at 65ch, an opener set like the head of a memo, section heads as
@@ -55,6 +60,20 @@ paper **light** · display **geometric-humanist sans** · accent **warm**.
 | `--color-accent` | #9c4535 | 50.0% 0.120 32 | links, CTA fill, focus, call bar | **5.9** | 5.4 |
 | `--color-accent-2` | #dc8d7d | 72.0% 0.100 32 | step rail (non-text) | 2.4 | — |
 | `--color-destructive` | #a1252f | 47.0% 0.160 22 | form errors | **6.9** | 6.4 |
+
+**The practice's own three**, lifted off the logo mark — the olive line of the
+profile and two of the three petals. They are a second register for the hero
+and travel nowhere else on the site.
+
+| Token | Hex | OKLCH | Role | On paper |
+|---|---|---|---|---|
+| `--color-olive` | #657267 | 53.8% 0.023 150 | hero eyebrow | **4.70** |
+| `--color-clay` | #cfa98b | 76.1% 0.061 60 | hero rule, separators | 2.01 |
+| `--color-sand` | #e5d9c9 | 89.1% 0.025 75 | the hero plate's ground | 1.29 |
+
+Olive is text-grade on paper only; on sand it falls to 3.63, so nothing set on
+the plate uses it — the plate's own type is ink (11.58) and ink-2 (7.23). Clay
+is ornament: rules and separators, never a glyph.
 
 Every figure is WCAG 2.1, measured with the script in the scratchpad, not
 estimated. Hairlines sit below 3:1 on purpose: they separate, they do not
@@ -93,7 +112,9 @@ container `.shell`: max 80rem, `padding-inline: clamp(1rem, 5vw, 4rem)`.
   `--ease-standard` (state toggles). Durations 90 / 180 / 320 / 560 / 900ms.
 - One orchestrated hero entrance (CSS keyframes, 70ms stagger) plus one
   scroll-linked rise (`animation-timeline: view()`, transform only, never
-  opacity, off below 40rem and under reduced motion).
+  opacity, off below 40rem and under reduced motion). The rise is opt-in: the
+  `.reveal` class, on two lists, never on every section — a page where
+  everything arrives is a page that never settles.
 - Cross-document view transitions; the nav pill is named and holds still.
 - Nothing bounces. Nothing pulses. Nothing delays the phone number.
 
@@ -117,6 +138,15 @@ container `.shell`: max 80rem, `padding-inline: clamp(1rem, 5vw, 4rem)`.
 - Content pages: typography only; photographs inline at reading width.
 - Index pages: no images.
 
+Every one of those is gated on `photosReady` in `lib/site.ts`, which is
+`false` while `public/images/` holds generated plates. Nothing invented is
+published: the hero falls back to the mark on its plate, and the galleries and
+the portrait stand down until real photographs arrive. See CONTENT.md § 6.
+
+Numbers on the page are the same rule. No rating, no counts, no percentages
+unless the practice supplies them — the trust section links to the reviews at
+their source rather than restating a figure copied off a directory.
+
 ## What pages MUST share
 The nav pill and the footer; the palette and the accent budget; Manrope; the
 CTA voice; section h2 size, opener shape, label style.
@@ -138,6 +168,11 @@ CTA voice; section h2 size, opener shape, label style.
   --color-accent-ink:  oklch(97.6% 0.007 75);
   --color-destructive: oklch(47.0% 0.160 22);
   --color-focus:       oklch(50.0% 0.120 32);
+
+  /* hero only, from the logo mark */
+  --color-olive:       oklch(53.8% 0.023 150);
+  --color-clay:        oklch(76.1% 0.061 60);
+  --color-sand:        oklch(89.1% 0.025 75);
 
   --font-display: "Manrope", "Segoe UI", system-ui, sans-serif;
   --font-body:    "Manrope", "Segoe UI", system-ui, sans-serif;

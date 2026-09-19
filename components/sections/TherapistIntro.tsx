@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Photo from "@/components/Photo";
-import { therapist, therapistImage } from "@/lib/site";
+import { photosReady, therapist, therapistImage } from "@/lib/site";
 import { ArrowRightIcon } from "@/components/Icon";
 
 /**
@@ -16,17 +16,19 @@ export default function TherapistIntro({ full = false }: { full?: boolean }) {
       id="logotherapeftria"
       className="shell grid gap-10 pb-16 pt-8 md:grid-cols-12 md:gap-12 md:pb-24 md:pt-12"
     >
-      <div className="md:col-span-5">
-        <Photo
-          src={therapistImage.src}
-          alt={therapistImage.alt}
-          caption={therapist.name}
-          className="aspect-[4/5] w-full"
-          priority={full}
-        />
-      </div>
+      {photosReady && (
+        <div className="md:col-span-5">
+          <Photo
+            src={therapistImage.src}
+            alt={therapistImage.alt}
+            caption={therapist.name}
+            className="aspect-[4/5] w-full"
+            priority={full}
+          />
+        </div>
+      )}
 
-      <div className="md:col-span-6 md:col-start-7">
+      <div className={photosReady ? "md:col-span-6 md:col-start-7" : "md:col-span-7"}>
         <p className="eyebrow">{therapist.title}</p>
         <h2 className="display mt-3 text-[clamp(1.75rem,2.5vw+0.5rem,2.75rem)]">{therapist.name}</h2>
 

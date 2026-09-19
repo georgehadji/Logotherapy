@@ -1,10 +1,15 @@
 import Link from "next/link";
 import Photo from "@/components/Photo";
-import { spaceImages } from "@/lib/site";
+import { photosReady, spaceImages } from "@/lib/site";
 import { ArrowRightIcon } from "@/components/Icon";
 
-/** Two rooms on the homepage; the rest of the space lives on /to-kentro. */
+/**
+ * Two rooms on the homepage; the rest of the space lives on /to-kentro. A
+ * gallery with nothing real in it is worse than no gallery, so until the
+ * photographs arrive the section stands down and the nav carries the route.
+ */
 export default function SpaceGallery() {
+  if (!photosReady) return null;
   const pair = spaceImages.slice(0, 2);
 
   return (

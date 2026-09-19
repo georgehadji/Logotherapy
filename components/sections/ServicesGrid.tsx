@@ -32,19 +32,16 @@ export default function ServicesGrid({ limit }: { limit?: number }) {
           )}
         </div>
 
-        <ul className="grid gap-4 sm:grid-cols-2 md:col-span-8 md:gap-5">
+        {/* No numerals: eight services are a set, not a sequence. The card is
+            the link, so it carries no second "read more" affordance. */}
+        <ul className="reveal grid gap-4 sm:grid-cols-2 md:col-span-8 md:gap-5">
           {items.map((s) => (
             <li key={s.slug} className="min-w-0">
               <Link href={`/ypiresies/${s.slug}`} className="card card-link group flex h-full flex-col p-5 md:p-6">
-                <span className="numeral text-xs font-semibold text-ink-3">{s.n}</span>
-                <span className="display mt-2 block text-lg leading-snug transition-colors t-quick group-hover:text-accent md:text-xl">
+                <span className="display block text-lg leading-snug transition-colors t-quick group-hover:text-accent md:text-xl">
                   {s.title}
                 </span>
-                <span className="mt-2 block flex-1 text-sm leading-relaxed text-ink-2">{s.text}</span>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
-                  Περισσότερα
-                  <ArrowRightIcon className="size-4 transition-transform t-base group-hover:translate-x-0.5" />
-                </span>
+                <span className="mt-2 block text-sm leading-relaxed text-ink-2">{s.text}</span>
               </Link>
             </li>
           ))}

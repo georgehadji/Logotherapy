@@ -61,6 +61,19 @@ specialty, the year, the credentials and the equipment are verified.
 `PROMPTS.md`. `lilian-mpatsikosta-logotherapeftria.png` stands in for a real,
 named person — supply a real portrait.
 
+**Nothing generated is published.** `photosReady` in `lib/site.ts` is `false`,
+so the homepage gallery, the portrait beside the biography and the room plates
+on `/to-kentro` are all withheld; the hero shows the practice's mark and name
+on its plate instead. Drop the real files in over the placeholder filenames,
+flip `photosReady` to `true`, and every one of those surfaces comes back with
+no other change.
+
+`Logo.png` is the practice's mark as supplied; `logo-mark.png` is the same
+file trimmed and scaled to 480px for the web. It is composited with
+`mix-blend-mode: multiply`, so the white field behind it disappears on any
+light ground — if a transparent PNG or an SVG of the mark ever arrives, it can
+replace `logo-mark.png` directly.
+
 ### 7. Missing from the listings, currently absent from the site
 
 - No email is published on the site itself (`contactEmail` is the inbox the

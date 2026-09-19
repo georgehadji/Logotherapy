@@ -5,12 +5,15 @@ import { steps } from "@/lib/site";
  * parent wants to know what will happen before it happens — this is the
  * section that tells them, in order, from the first phone call to the last
  * session.
+ *
+ * Stacked, not split: the band is the one place on the page where the reading
+ * runs straight down the page instead of across two columns.
  */
 export default function Steps() {
   return (
     <section id="poreia" className="bg-blush py-16 md:py-24">
-      <div className="shell grid gap-10 md:grid-cols-12 md:gap-12">
-        <div className="md:col-span-4 md:col-start-9">
+      <div className="shell">
+        <div className="max-w-[34rem]">
           <h2 className="display text-[clamp(1.75rem,2.5vw+0.5rem,2.75rem)]">
             Τι θα συμβεί, βήμα βήμα
           </h2>
@@ -20,7 +23,9 @@ export default function Steps() {
           </p>
         </div>
 
-        <ol className="rail md:col-span-7 md:col-start-1 md:row-start-1">
+        {/* Capped, not full-bleed: a measure the eye can run down without
+            losing the rail, and the empty right half reads as chosen. */}
+        <ol className="rail reveal mt-12 max-w-[46rem] md:mt-16">
           {steps.map((s) => (
             <li
               key={s.n}
