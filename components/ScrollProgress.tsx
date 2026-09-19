@@ -67,7 +67,8 @@ export default function ScrollProgress() {
       // One hover signal, one pixel: a lift, not a zoom.
       className="press fixed bottom-24 right-6 z-[var(--z-sticky)] grid size-12 cursor-pointer place-items-center rounded-full bg-paper-2/80 backdrop-blur transition-[opacity,transform] t-quick hover:-translate-y-0.5 md:bottom-10 md:right-10"
     >
-      <svg viewBox="0 0 48 48" className="absolute inset-0 size-full -rotate-90">
+      {/* Both graphics are decoration: the button's aria-label is the name. */}
+      <svg viewBox="0 0 48 48" aria-hidden className="absolute inset-0 size-full -rotate-90">
         <circle cx="24" cy="24" r={R} fill="none" stroke="var(--color-line)" strokeWidth="1.5" />
         <circle
           ref={arc}
@@ -82,7 +83,7 @@ export default function ScrollProgress() {
           strokeDashoffset={C}
         />
       </svg>
-      <svg viewBox="0 0 24 24" className="size-4 stroke-ink" fill="none" strokeWidth="1.5">
+      <svg viewBox="0 0 24 24" aria-hidden className="size-4 stroke-ink" fill="none" strokeWidth="1.5">
         <path d="M12 19V5M5 12l7-7 7 7" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { location } from "@/lib/site";
 import { MapPinIcon } from "./Icon";
 
@@ -21,12 +21,28 @@ import { MapPinIcon } from "./Icon";
 export default function MapEmbed() {
   const [show, setShow] = useState(false);
 
+  /*
+   * The press unmounts the button it came from, so focus would land back on
+   * <body> and the next Tab would restart at the top of the page — having
+   * just asked for the map, the keyboard reader would be sent away from it.
+   */
+  const loaded = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (show) loaded.current?.focus();
+  }, [show]);
+
   const frame =
     "mt-5 aspect-[4/3] w-full overflow-hidden rounded-[var(--radius-card)] border border-line md:aspect-[3/2]";
 
   if (show) {
     return (
-      <div className={`${frame} bg-paper`}>
+      <div
+        ref={loaded}
+        tabIndex={-1}
+        role="group"
+        aria-label={`Χάρτης: ${location.line}`}
+        className={`${frame} bg-paper focus:outline-none`}
+      >
         <iframe
           src={location.mapsEmbed}
           title={`Χάρτης: ${location.line}`}

@@ -68,6 +68,17 @@ export default function ContactForm() {
     mountedAt.current = Date.now();
   }, []);
 
+  /*
+   * Send the reader with the content. The form unmounts on success, taking
+   * the focused submit button with it, so focus falls back to <body> and the
+   * next Tab restarts from the top of the document — the one moment the
+   * confirmation matters is the moment the keyboard loses its place.
+   */
+  const sentPanel = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (status === "sent") sentPanel.current?.focus();
+  }, [status]);
+
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
@@ -156,7 +167,13 @@ export default function ContactForm() {
 
   if (status === "sent") {
     return (
-      <div className="hairline pt-10" role="status" aria-live="polite">
+      <div
+        ref={sentPanel}
+        tabIndex={-1}
+        className="hairline pt-10 focus:outline-none"
+        role="status"
+        aria-live="polite"
+      >
         <p className="display text-3xl md:text-4xl">Το μήνυμα στάλθηκε.</p>
         <p className="mt-4 max-w-md text-ink-2">
           Θα λάβετε απάντηση το συντομότερο δυνατό. Αν θέλετε να κλείσετε ραντεβού άμεσα,
@@ -220,11 +237,16 @@ export default function ContactForm() {
       </p>
 
       <div>
+        {/* The one control that does not go through <Field>, so its wiring is
+            done by hand: without it the reader is told the form failed, is
+            moved to this checkbox, and never hears why. */}
         <label className="flex cursor-pointer items-start gap-3 text-sm text-ink-2">
           <input
             type="checkbox"
             name="consent"
             data-field="consent"
+            aria-invalid={errors.consent ? true : undefined}
+            aria-describedby={errors.consent ? "consent-error" : undefined}
             className="mt-1 size-4 shrink-0 cursor-pointer accent-[var(--color-accent)]"
           />
           <span>
@@ -236,7 +258,9 @@ export default function ContactForm() {
             .
           </span>
         </label>
-        <p className={errClass}>{errors.consent}</p>
+        <p id="consent-error" role="alert" className={errClass}>
+          {errors.consent}
+        </p>
       </div>
 
       <div className="flex flex-wrap items-center gap-6">
@@ -293,7 +317,10 @@ function Field({
   const control = isValidElement(children)
     ? cloneElement(children as React.ReactElement<Record<string, unknown>>, {
         "aria-invalid": error ? true : undefined,
-        "aria-describedby": `${id}-error`,
+        // Only while there is something to describe. The slot below is always
+        // in the layout so the field never jumps, but pointing every clean
+        // input at an empty node advertises a description that is not there.
+        "aria-describedby": error ? `${id}-error` : undefined,
         "aria-required": required ? true : undefined,
         required: required || undefined,
       })
