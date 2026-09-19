@@ -61,12 +61,13 @@ specialty, the year, the credentials and the equipment are verified.
 `PROMPTS.md`. `lilian-mpatsikosta-logotherapeftria.png` stands in for a real,
 named person — supply a real portrait.
 
-**Nothing generated is published.** `photosReady` in `lib/site.ts` is `false`,
-so the homepage gallery, the portrait beside the biography and the room plates
-on `/to-kentro` are all withheld; the hero shows the practice's mark and name
-on its plate instead. Drop the real files in over the placeholder filenames,
-flip `photosReady` to `true`, and every one of those surfaces comes back with
-no other change.
+**Current state: `photosReady` is `true` and five generated photographs are
+live** — four of the rooms and one portrait, as WebP at 1122×1402. They are
+not photographs of this centre and the portrait is not a photograph of
+Ευαγγελία Μπατσικώστα; they were produced from the prompts in `PROMPTS.md`.
+Visitors read the portrait as her, so it needs her sign-off and, properly, a
+real photograph. Replacing them is a straight file swap — same names, same
+folder — and `photosReady = false` withholds all of them again in one edit.
 
 `Logo.png` is the practice's mark as supplied; `logo-mark.png` is the same
 file trimmed and scaled to 480px for the web. It is composited with

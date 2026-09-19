@@ -448,28 +448,26 @@ export const faq = [
 ] as const;
 
 /**
- * The one switch for photography. `false` while `public/images/` holds
- * generated placeholders: the gallery, the portrait and the hero plate all
- * read this flag and fall back to type instead of shipping invented pictures
- * of a real practice. Flip to `true` the day real photographs land — nothing
- * else needs to change.
+ * The one switch for photography. The gallery, the portrait and the hero
+ * plate all read it; `false` falls back to type. See CONTENT.md § 6 for what
+ * the current files are and what still has to be confirmed about them.
  */
-export const photosReady = false;
+export const photosReady = true;
 
 /**
  * Photographs of the space. Every file is a generated placeholder until the
  * practice supplies photographs; PROMPTS.md has a prompt per file.
  */
 export const spaceImages = [
-  { src: "/images/kentro-logotherapeias-aithousa.png", alt: "Αίθουσα θεραπείας με χαμηλό τραπέζι και παιχνίδια", caption: "Η αίθουσα θεραπείας" },
-  { src: "/images/kentro-logotherapeias-ypodochi.png", alt: "Ο χώρος υποδοχής και αναμονής των γονέων", caption: "Υποδοχή" },
-  { src: "/images/kentro-logotherapeias-sitisi.png", alt: "Ο χώρος θεραπείας σίτισης με παιδικό καρεκλάκι", caption: "Θεραπεία σίτισης" },
-  { src: "/images/kentro-logotherapeias-eisodos.png", alt: "Η είσοδος του κέντρου στη Νέα Μηχανιώνα", caption: "Η είσοδος · Κανάρη 15" },
+  { src: "/images/kentro-logotherapeias-aithousa.webp", alt: "Αίθουσα θεραπείας με χαμηλό τραπέζι και παιχνίδια", caption: "Η αίθουσα θεραπείας" },
+  { src: "/images/kentro-logotherapeias-ypodochi.webp", alt: "Ο χώρος υποδοχής και αναμονής των γονέων", caption: "Υποδοχή" },
+  { src: "/images/kentro-logotherapeias-sitisi.webp", alt: "Ο χώρος θεραπείας σίτισης με παιδικό καρεκλάκι", caption: "Θεραπεία σίτισης" },
+  { src: "/images/kentro-logotherapeias-eisodos.webp", alt: "Η είσοδος του κέντρου στη Νέα Μηχανιώνα", caption: "Η είσοδος · Κανάρη 15" },
 ] as const;
 
-/** Portrait used on the homepage and /logotherapeftria. A placeholder until a real photograph is supplied. */
+/** Portrait used on the homepage hero and /logotherapeftria. */
 export const therapistImage = {
-  src: "/images/lilian-mpatsikosta-logotherapeftria.png",
+  src: "/images/lilian-mpatsikosta-logotherapeftria.webp",
   alt: `${therapist.name}, ${therapist.title}`,
 };
 
