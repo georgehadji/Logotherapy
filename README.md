@@ -50,7 +50,8 @@ app/
   politiki-aporritou/           privacy policy
   oroi-chrisis/                 terms
   opengraph-image.tsx           social card, rendered at build
-  icon.svg                      favicon
+  icon.png                      favicon, the practice's mark on paper
+  apple-icon.png                the same at 180px, for home-screen bookmarks
   sitemap.ts, robots.ts
 components/
   sections/                     Hero, Steps, ServicesGrid, TherapistIntro,
