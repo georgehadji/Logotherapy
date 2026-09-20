@@ -31,8 +31,16 @@ export default function MapEmbed() {
     if (show) loaded.current?.focus();
   }, [show]);
 
-  const frame =
-    "mt-5 aspect-[4/3] w-full overflow-hidden rounded-[var(--radius-card)] border border-line md:aspect-[3/2]";
+  /*
+   * The loaded frame keeps a fixed ratio, because an iframe needs its box
+   * reserved before it arrives. The facade only takes a floor: it holds real
+   * text, and a reader running the WCAG text-spacing overrides pushed it past
+   * a fixed 4/3 box at 320px, where `overflow-hidden` cut the bottom off the
+   * button. A ratio is a promise about a picture, not about a paragraph.
+   */
+  const shell = "mt-5 w-full rounded-[var(--radius-card)] border border-line";
+  const ratio = "aspect-[4/3] overflow-hidden md:aspect-[3/2]";
+  const floor = "min-h-[14rem] md:min-h-[18rem]";
 
   if (show) {
     return (
@@ -41,7 +49,7 @@ export default function MapEmbed() {
         tabIndex={-1}
         role="group"
         aria-label={`Χάρτης: ${location.line}`}
-        className={`${frame} bg-paper focus:outline-none`}
+        className={`${shell} ${ratio} bg-paper focus:outline-none`}
       >
         <iframe
           src={location.mapsEmbed}
@@ -58,7 +66,7 @@ export default function MapEmbed() {
     <button
       type="button"
       onClick={() => setShow(true)}
-      className={`${frame} press-sm group flex cursor-pointer flex-col items-center justify-center gap-4 bg-blush p-6 text-center transition-colors t-quick hover:border-accent-2`}
+      className={`${shell} ${floor} press-sm group flex cursor-pointer flex-col items-center justify-center gap-4 bg-blush p-6 text-center transition-colors t-quick hover:border-accent-2`}
     >
       <MapPinIcon className="size-7 shrink-0 text-accent" />
       <span className="display text-lg text-ink md:text-xl">{location.line}</span>

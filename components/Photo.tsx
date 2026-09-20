@@ -41,6 +41,28 @@ export default function Photo({
 }: Props) {
   const [open, setOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const wasOpen = useRef(false);
+
+  /*
+   * Put the reader back where they were.
+   *
+   * A native <dialog> restores focus when it is closed — but only if it is
+   * still in the document. This one is unmounted in the same commit that
+   * closes it, and a dialog removed while open restores nothing, so focus
+   * fell to <body>: close a photograph of a room and the keyboard was back at
+   * the top of the page, with the whole nav to tab through to reach the next
+   * one. Four photographs on /to-kentro make that four times.
+   */
+  useEffect(() => {
+    if (open) {
+      wasOpen.current = true;
+      return;
+    }
+    if (!wasOpen.current) return; // never opened; do not steal focus on mount
+    wasOpen.current = false;
+    trigger.current?.focus();
+  }, [open]);
 
   const small = half(src);
   const thumbs = small ? `${small} ${HALF_W}w, ${src} ${FULL_W}w` : null;
@@ -71,7 +93,13 @@ export default function Photo({
 
   return (
     <>
-      <button type="button" onClick={show} aria-label={`Μεγέθυνση: ${alt}`} className={`photo ${className ?? ""}`}>
+      <button
+        ref={trigger}
+        type="button"
+        onClick={show}
+        aria-label={`Μεγέθυνση: ${alt}`}
+        className={`photo ${className ?? ""}`}
+      >
         {/* The export runs with `images: { unoptimized: true }`, so there is no
             optimiser to resize these: the widths are written to disk and the
             browser picks. Without it a four-up strip on a phone pulls four
